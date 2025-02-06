@@ -3,3 +3,19 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+# config/routes.yaml
+contact:
+    path: /contact
+    controller: App\Controller\ContactController::index
+
+    # config/routes.yaml
+jobs_index:
+    path: /jobs
+    controller: App\Controller\JobsController::index
+
+
+    # config/routes.yaml
+company:
+    path: /company
+    controller: App\Controller\CompanyController::index
