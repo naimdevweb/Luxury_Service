@@ -19,3 +19,6 @@ jobs_index:
 company:
     path: /company
     controller: App\Controller\CompanyController::index
+
+
+    

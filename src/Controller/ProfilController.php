@@ -30,6 +30,9 @@ final class ProfilController extends AbstractController
         if ($candidat === null) {
             $candidat = new Candidat();
             $candidat->setUser($user);
+           
+            $candidat->setUpdatedAt(new \DateTimeImmutable());
+
         }
        
 
@@ -37,9 +40,31 @@ final class ProfilController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+          if(  $candidat->getCreatedAt(new \DateTimeImmutable()) == null){
+            $candidat->setCreatedAt(new \DateTimeImmutable());
+          } 
+         
 
+          
+$candidat->setUpdatedAt(new \DateTimeImmutable());
+
+$fichiers = $candidat->getFichiers();
+if ($fichiers) {
+    if ($fichiers->getPasseportFile()) {
+        $fichiers->setCheminPasseport($fichiers->getPasseportFile()->getFilename());
+    }
+    if ($fichiers->getCvFile()) {
+        $fichiers->setCheminCv($fichiers->getCvFile()->getFilename());
+    }
+    if ($fichiers->getPhotoFile()) {
+        $fichiers->setCheminPhoto($fichiers->getPhotoFile()->getFilename());
+    }
+    
+}
             // dd($candidat);
            $entityManager->flush();
+
+           
 
         }
 

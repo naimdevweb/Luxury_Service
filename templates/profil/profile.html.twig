@@ -140,26 +140,25 @@
 
 				{# input Image Profil #}
 				<div class="col-xs-12 col-sm-6 col-md-4">
-					<div class="file-field input-field" style="margin-top: 32px;">
-
-
-						<div class="btn btn-lg primary waves-effect waves-light">
-							<span>
-								<i class="material-icons">insert_photo</i>
-								Photo</span>
-							<input id="photo" size="20000000" accept=".pdf,.jpg,.doc,.docx,.png,.gif" name="photo" type="file">
-						</div>
-
-						<div class="existing-file">
-							<a href="#!" target="_blank">
-								<i class="material-icons">&#xE24D;</i>
-								profil_picture.jpg</a>
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Upload your ID photo" readonly>
-						</div>
-					</div>
-				</div>
+            <div class="file-field input-field" style="margin-top: 32px;">
+                {{ form_label(form.fichiers.photoFile, 'Photo') }}
+                <div class="btn btn-lg primary waves-effect waves-light">
+                    <span>
+                        <i class="material-icons">insert_photo</i>
+                        Photo</span>
+                    {{ form_widget(form.fichiers.photoFile, {'attr': {'id': 'photo', 'size': '20000000', 'accept': '.pdf,.jpg,.doc,.docx,.png,.gif', 'name': 'photo', 'type': 'file'}}) }}
+                </div>
+                <div class="existing-file">
+                    <a href="#!" target="_blank">
+                        <i class="material-icons">&#xE24D;</i>
+                        profil_picture.jpg</a>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload your ID photo" readonly>
+                </div>
+                {{ form_errors(form.fichiers.photoFile) }}
+            </div>
+        </div>
 
 
 				<div class="col-xs-12 col-sm-6 col-md-8">
@@ -217,43 +216,50 @@
 						class="card card-panel passport">
 
 						{# input Passeport #}
-						<div class="file-field input-field">
-							<div class="btn btn-lg primary waves-effect waves-light">
-								<span>
-									<i class="material-icons">&#xE24D;</i>
-									Passport</span>
-								<input id="passport" size="20000000" accept=".pdf,.jpg,.doc,.docx,.png,.gif" name="passport" type="file">
-							</div>
-							<div class="existing-file">
-								<a href="#!" target="_blank">
-									<i class="material-icons">&#xE24D;</i>
-									passeport.jpg</a>
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
-							</div>
-						</div>
+						 <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="file-field input-field" style="margin-top: 32px;">
+                {{ form_label(form.fichiers.passeportFile, 'Passeport') }}
+                <div class="btn btn-lg primary waves-effect waves-light">
+                    <span>
+                        <i class="material-icons">&#xE24D;</i>
+                        Passeport</span>
+                    {{ form_widget(form.fichiers.passeportFile, {'attr': {'id': 'passport', 'size': '20000000', 'accept': '.pdf,.jpg,.doc,.docx,.png,.gif', 'name': 'passport', 'type': 'file'}}) }}
+                </div>
+                <div class="existing-file">
+                    <a href="#!" target="_blank">
+                        <i class="material-icons">&#xE24D;</i>
+                        passeport.jpg</a>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
+                </div>
+                {{ form_errors(form.fichiers.passeportFile) }}
+            </div>
+        </div>
 
 						{# input CV #}
-						<div class="file-field input-field">
-							<div class="btn btn-lg primary waves-effect waves-light">
-								<span>
-									<i class="material-icons">&#xE24D;</i>
-									CV</span>
-								<input id="cv" size="20000000" accept=".pdf,.jpg,.doc,.docx,.png,.gif" name="cv" type="file">
-							</div>
-
-							<div class="existing-file">
-								<a href="#!" target="_blank">
-									<i class="material-icons">&#xE24D;</i>
-									CV.pdf</a>
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text" placeholder="Upload your Curriculum Vitae" readonly>
-							</div>
-						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="file-field input-field" style="margin-top: 32px;">
+                {{ form_label(form.fichiers.cvFile, 'CV') }}
+                <div class="btn btn-lg primary waves-effect waves-light">
+                    <span>
+                        <i class="material-icons">&#xE24D;</i>
+                        CV</span>
+                    {{ form_widget(form.fichiers.cvFile, {'attr': {'id': 'cv', 'size': '20000000', 'accept': '.pdf,.jpg,.doc,.docx,.png,.gif', 'name': 'cv', 'type': 'file'}}) }}
+                </div>
+                <div class="existing-file">
+                    <a href="#!" target="_blank">
+                        <i class="material-icons">&#xE24D;</i>
+                        CV.pdf</a>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload your Curriculum Vitae" readonly>
+                </div>
+                {{ form_errors(form.fichiers.cvFile) }}
+            </div>
 
 					</div>
+					
 				</div>
 
 				<div
@@ -262,11 +268,7 @@
 					{# input Job Category #}
 					<div class="col-xs-12 col-sm-12">
 						<div class="input-field" style="margin-top: 5px;">
-							{# <select id="job_sector" name="job_sector[]" multiple data-placeholder="Type in or Select job sector you would be interested in.">
-								<option value="">Choose an option...</option>
-								<option value="">job sector</option>
-							</select>
-							<label for="job_sector" class="active">Interest in job sector</label> #}
+							
 
                              {{ form_label(form.categorie, 'Interest in job sector') }}
                 {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}

@@ -3,10 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\CandidatRepository;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CandidatRepository::class)]
+#[Vich\Uploadable]
 class Candidat
 {
     #[ORM\Id]
@@ -24,22 +29,22 @@ class Candidat
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $localisation = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $pays = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nationalite = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_naissance = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $lieu_naissance = null;
 
     
@@ -53,9 +58,32 @@ class Candidat
     #[ORM\ManyToOne(inversedBy: 'candidats')]
     private ?ExperienceProfessionel $experience = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\OneToOne(inversedBy: 'candidat', cascade: ['persist', 'remove'])]
+    private ?Fichiers $fichiers = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $deleted_at = null;
+
+    /**
+     * @var Collection<int, Candidature>
+     */
+    #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'candidat')]
+    private Collection $candidature;
+    public function __construct()
+    {
+        $this->created_at = new DateTimeImmutable();
+        $this->candidature = new ArrayCollection();
+      
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -225,6 +253,84 @@ class Candidat
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getFichiers(): ?Fichiers
+    {
+        return $this->fichiers;
+    }
+
+    public function setFichiers(?Fichiers $fichiers): static
+    {
+        $this->fichiers = $fichiers;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeImmutable
+    {
+        return $this->deleted_at;
+    }
+
+    public function setDeletedAt(\DateTimeImmutable $deleted_at): static
+    {
+        $this->deleted_at = $deleted_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Candidature>
+     */
+    public function getCandidature(): Collection
+    {
+        return $this->candidature;
+    }
+
+    public function addCandidature(Candidature $candidature): static
+    {
+        if (!$this->candidature->contains($candidature)) {
+            $this->candidature->add($candidature);
+            $candidature->setCandidat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidature(Candidature $candidature): static
+    {
+        if ($this->candidature->removeElement($candidature)) {
+            // set the owning side to null (unless already changed)
+            if ($candidature->getCandidat() === $this) {
+                $candidature->setCandidat(null);
+            }
+        }
 
         return $this;
     }
