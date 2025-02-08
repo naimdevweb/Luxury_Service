@@ -6,13 +6,9 @@
     <meta name="csrf-token" content="9Tnm0YBCxgVTxoqI1HzccsU5NuE9RughZmhpzgXn">
 {% endblock meta %}
 
-
-
 {% block linkicon %}
     <link rel="shortcut icon" href="./assets/img/ico/fav.png">
 {% endblock linkicon %}
-
-
 
 {% block body %}
 <body id="top">
@@ -29,8 +25,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="white-text">2nd assistant position</h2>
-                        <span class="white-text">Ref. 1007</span>
+                        <h2 class="white-text">{{ offre_emploi.titre }}</h2>
+                        <span class="white-text">Ref. {{ offre_emploi.id }}</span>
                         <ol class="breadcrumb">
                             <li>
                                 <div class="portfolio-nav">
@@ -51,22 +47,28 @@
                 <div class="project-overview">
                     <div class="row mb-80">
                         <div class="col-xs-12 col-md-8">
-                            <p class="ref grey-text no-margin">Ref. 1007</p>
-                            <h2>2nd assistant position</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec tortor venenatis, consequat quam et, varius lorem. Vivamus auctor vehicula odio, non scelerisque nibh cursus maximus. Sed hendrerit eros libero, vel accumsan nisi sagittis sit amet. Vivamus vitae neque convallis, consectetur lectus ac, pellentesque massa. Morbi finibus faucibus lorem vel placerat. Vivamus neque ligula, lacinia ac arcu sed, egestas mattis felis. Pellentesque tincidunt nulla lorem, ut sollicitudin metus volutpat ut. Vivamus et dignissim elit. </p>
-                            <p>Vivamus id congue massa. Praesent ornare ipsum dolor, ut semper sapien tempus non. Integer eget dui vehicula nisi rutrum interdum et id turpis. Nam eu mollis sem. Aenean in hendrerit neque. Morbi rhoncus lacinia risus ac mattis. Pellentesque a mauris sapien. Nunc sit amet accumsan massa. Nulla gravida porttitor luctus. Aliquam fringilla at quam non euismod. Phasellus eu gravida eros. Cras odio risus, blandit non suscipit sed, volutpat vitae nulla. In ultrices at leo sit amet interdum.</p>
+                            <p class="ref grey-text no-margin">Ref. {{ offre_emploi.id }}</p>
+                            <h2>{{ offre_emploi.titre }}</h2>
+                            <p>{{ offre_emploi.description }}</p>
                         </div>
 
                         <div class="col-xs-12 col-md-4 quick-overview">
                             <ul class="portfolio-meta">
-                                <li><span> Pulished at </span>24 May 18</li>
-                                <li><span> Position </span>2nd Engineer</li>
-                                <li><span> Contract Type </span>Full Time</li>
-                                <li><span> Salary </span>45k &euro;</li>
-                                <li><span> Location </span>Paris</li>
-                                <li><span> Starting date </span>2018-05-18</li>
+                                <li><span> Published at </span>{{ offre_emploi.createdAt|date('Y-m-d')}}</li>
+                                <li><span> Position </span>{{ offre_emploi.titre }}</li>
+                                {# <li><span> Contract Type </span>{{ offre_emploi.typeContrat }}</li> #}
+                                <li><span> Salary </span>{{ offre_emploi.salaire }} &euro;</li>
+                                <li><span> Location </span>{{ offre_emploi.localisation }}</li>
+                                {# <li><span> Starting date </span>{{ offre_emploi.dateDebut|date('Y-m-d') }}</li> #}
                             </ul>
-                            <a class="btn btn-block gradient primary mt-30 waves-effect waves-light" href="#!">Apply for this job</a>
+                            {% if app.user %}
+                                <form action="{{ path('candidature_postuler', {id: offre_emploi.id}) }}" method="post" style="display:inline;">
+                                    <input type="hidden" name="candidat_id" value="{{ app.user.id }}">
+                                    <button type="submit" class="btn btn-block gradient primary mt-30 waves-effect waves-light">Apply for this job</button>
+                                </form>
+                            {% else %}
+                                <a class="btn btn-block gradient primary mt-30 waves-effect waves-light" href="{{ path('app_login') }}">Login to Apply</a>
+                            {% endif %}
                             <div class="btn btn-block btn-success mt-30 waves-effect waves-light disabled">You have applied for this job</div>
                         </div>
                     </div>

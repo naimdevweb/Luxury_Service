@@ -11,7 +11,7 @@
 
 
 {% block linkicon %}
-	<link rel="shortcut icon" href="./assets/img/ico/fav.png">
+	<link rel="shortcut icon" href="../assets/img/ico/fav.png">
 {% endblock linkicon %}
 
 {% block body %}
@@ -38,7 +38,6 @@
 		</div>
 	</section>
 
-
 	<!-- Page Content-->
 	<section class="gray-bg">
 		<div class="container">
@@ -47,7 +46,7 @@
 					<h4>
 						<img src="https://i.imgur.com/s9bPVaK.gif" style="height: 80px; width: 201px;">
 						&nbsp;
-																														                            &nbsp; Hooray ! Your profile is complete.
+												                            &nbsp; Hooray ! Your profile is complete.
 					</h4>
 					<div class="c100 p100 small complete ">
 						<span>100%</span>
@@ -62,6 +61,7 @@
 		</div>
 	</section>
 
+
 	{{ form_start(form, {
             'attr': {
                 'id': 'candidateForm',
@@ -73,138 +73,161 @@
         }) }}
 
 	{# <input name="_token" type="hidden" value="UYfchy67WuTVzhSstPK1RDZEIfgqpKCcLnLyhf8a"> #}
+
+
 	<section class="section-padding">
 		<div class="container">
 			<div class="row">
 				<h3 class="text-extrabold">Your personal informations</h3>
 
-				{# input gender #}
-				<div class="col-xs-12 col-sm-6 col-md-4">
+				<div
+					class="col-xs-12 col-sm-6 col-md-4">
+
+					{# FORM GENRE #}
+{{ form_label(form.genre) }}
+{{ form_widget(form.genre) }}
+{{ form_errors(form.genre) }}
+
 					<div class="input-field">
-                          {{ form_label(form.genre, 'Genre') }}
-                {{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.genre) }}
+						
+						
+						
 					</div>
 				</div>
 
-                {# input Prenom #}
+
 				<div class="clearfix visible-sm"></div>
-				<div class="col-xs-12 col-sm-6 col-md-4">
-					<div
-						class="input-field">
+				<div
+					class="col-xs-12 col-sm-6 col-md-4">
+
+					{# FORM FIRST NAME #}
+
+					<div class="input-field">
+
 						{{ form_widget(form.prenom) }}
 						{{ form_label(form.prenom) }}
 						{{ form_errors(form.prenom) }}
 					</div>
 				</div>
+				<div
+					class="col-xs-12 col-sm-6 col-md-4">
 
-                {# input Nom #}
-				<div class="col-xs-12 col-sm-6 col-md-4">
-					<div
-						class="input-field">
-						{# <input type="text" class="form-control" name="last_name" id="last_name" value="" required>
-																														                                <label for="last_name">Last name</label> #}
+					{# FORM LAST NAME #}
+
+					<div class="input-field">
 						{{ form_widget(form.nom) }}
 						{{ form_label(form.nom) }}
 						{{ form_errors(form.nom) }}
 					</div>
 				</div>
 
-				{# input localisation #}
-				<div class="col-xs-12 col-sm-6 col-md-4">
-					<div class="input-field">
-					
+				<div
+					class="col-xs-12 col-sm-6 col-md-4">
 
-                          {{ form_widget(form.localisation) }}
+					{# FORM CURRENT LOCATION #}
+
+					<div class="input-field">
+						{{ form_widget(form.localisation) }}
 						{{ form_label(form.localisation) }}
 						{{ form_errors(form.localisation) }}
 					</div>
 				</div>
+				<div
+					class="col-xs-12 col-sm-8">
 
-				{# input adress #}
-				<div class="col-xs-12 col-sm-8">
+					{# FORM ADRESS #}
+
 					<div class="input-field">
-						
-                        {{ form_widget(form.adresse) }}
+						{{ form_widget(form.adresse) }}
 						{{ form_label(form.adresse) }}
 						{{ form_errors(form.adresse) }}
 					</div>
 				</div>
-
-
 			</div>
+			<div class="row">
+				<div
+					class="col-xs-12 col-sm-6 col-md-4">
 
+					{# FORM PHOTO #}
 
-			<div
-				class="row">
+					<div class="file-field input-field" style="margin-top: 32px;">
+						<div class="btn btn-lg primary waves-effect waves-light">
+							<span>
+								<i class="material-icons">insert_photo</i>
+								Photo</span>
+							{# <input id="photo" size="20000000" accept=".pdf,.jpg,.doc,.docx,.png,.gif" name="photo" type="file"> #}
+								{{ form_widget(form.fichiers.photoFile, {'attr': {'onchange': 'previewImage(event)'}}) }}
+        {{ form_errors(form.fichiers.photoFile) }}
 
-				{# input Image Profil #}
-				<div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="file-field input-field" style="margin-top: 32px;">
-                {{ form_label(form.fichiers.photoFile, 'Photo') }}
-                <div class="btn btn-lg primary waves-effect waves-light">
-                    <span>
-                        <i class="material-icons">insert_photo</i>
-                        Photo</span>
-                    {{ form_widget(form.fichiers.photoFile, {'attr': {'id': 'photo', 'size': '20000000', 'accept': '.pdf,.jpg,.doc,.docx,.png,.gif', 'name': 'photo', 'type': 'file'}}) }}
-                </div>
-                <div class="existing-file">
-                    <a href="#!" target="_blank">
-                        <i class="material-icons">&#xE24D;</i>
-                        profil_picture.jpg</a>
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload your ID photo" readonly>
-                </div>
-                {{ form_errors(form.fichiers.photoFile) }}
-            </div>
-        </div>
-
-
-				<div class="col-xs-12 col-sm-6 col-md-8">
-					<div
-						class="row">
-
-						{# input Pays #}
-						<div class="col-xs-12 col-sm-6">
-							<div class="input-field">
-
-                                    {{ form_widget(form.pays) }}
-						{{ form_label(form.pays) }}
-						{{ form_errors(form.pays) }}
-							</div>
 						</div>
 
-						{# input nationalité #}
-						<div class="col-xs-12 col-sm-6">
-							<div class="input-field">
+						  <div class="existing-file">
+        {% set photoFile = form.fichiers.vars.value.getCheminPhoto() %}
+       
+    </div>
+
 						
-                                    {{ form_widget(form.nationalite) }}
-						{{ form_label(form.nationalite) }}
-						{{ form_errors(form.nationalite) }}
-                                
-							</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text" placeholder="Upload your ID photo" readonly>
 						</div>
+					<div class="image-preview">
+        <img id="imagePreview" src="{{ asset('uploads/photos/' ~ photoFile) }}" alt="Aperçu de l'image" style="max-width: 100%; height: auto;">
+    </div>
+					</div>
+				</div>
 
-						{# input Date de naissance #}
-						<div class="col-xs-12 col-sm-6">
+
+				
+				
+				<div class="col-xs-12 col-sm-6 col-md-8">
+					<div class="row">
+						<div
+							class="col-xs-12 col-sm-6">
+
+							{# FORM COUNTRY #}
+
 							<div class="input-field">
-                                   {{ form_widget(form.date_naissance) }}
-						{{ form_label(form.date_naissance) }}
-						{{ form_errors(form.date_naissance) }}
+								{{ form_widget(form.pays) }}
+								{{ form_label(form.pays) }}
+								{{ form_errors(form.pays) }}
 							</div>
 						</div>
+						<div
+							class="col-xs-12 col-sm-6">
 
-						{# input Lieu de naissance #}
-						<div class="col-xs-12 col-sm-6">
+							{# FORM NATIONALITY #}
+							
+
 							<div class="input-field">
-								
-                                   {{ form_widget(form.lieu_naissance) }}
-						{{ form_label(form.lieu_naissance) }}
-						{{ form_errors(form.lieu_naissance) }}
+								{{ form_widget(form.nationalite) }}
+								{{ form_label(form.nationalite) }}
+								{{ form_errors(form.nationalite) }}
 							</div>
 						</div>
+						<div
+							class="col-xs-12 col-sm-6">
 
+							{# FORM BIRTHDATE #}
+
+							<div class="input-field">
+							{{ form_widget(form.date_naissance) }}
+								{{ form_label(form.date_naissance) }}
+								{{ form_errors(form.date_naissance) }}
+								{# <input class="datepicker" id="birth_date" name="birth_date" type="text" value="">
+								<label for="birth_date">Birthdate</label> #}
+							</div>
+						</div>
+						<div
+							class="col-xs-12 col-sm-6">
+
+							{# FORM BIRTHPLACE #}
+
+							<div class="input-field">
+								{{ form_widget(form.lieu_naissance) }}
+								{{ form_label(form.lieu_naissance) }}
+								{{ form_errors(form.lieu_naissance) }}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -215,88 +238,98 @@
 					<div
 						class="card card-panel passport">
 
-						{# input Passeport #}
-						 <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="file-field input-field" style="margin-top: 32px;">
-                {{ form_label(form.fichiers.passeportFile, 'Passeport') }}
-                <div class="btn btn-lg primary waves-effect waves-light">
-                    <span>
-                        <i class="material-icons">&#xE24D;</i>
-                        Passeport</span>
-                    {{ form_widget(form.fichiers.passeportFile, {'attr': {'id': 'passport', 'size': '20000000', 'accept': '.pdf,.jpg,.doc,.docx,.png,.gif', 'name': 'passport', 'type': 'file'}}) }}
-                </div>
-                <div class="existing-file">
-                    <a href="#!" target="_blank">
-                        <i class="material-icons">&#xE24D;</i>
-                        passeport.jpg</a>
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
-                </div>
-                {{ form_errors(form.fichiers.passeportFile) }}
-            </div>
-        </div>
+						{# FORM PASSPORT #}
 
-						{# input CV #}
-						<div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="file-field input-field" style="margin-top: 32px;">
-                {{ form_label(form.fichiers.cvFile, 'CV') }}
-                <div class="btn btn-lg primary waves-effect waves-light">
-                    <span>
-                        <i class="material-icons">&#xE24D;</i>
-                        CV</span>
-                    {{ form_widget(form.fichiers.cvFile, {'attr': {'id': 'cv', 'size': '20000000', 'accept': '.pdf,.jpg,.doc,.docx,.png,.gif', 'name': 'cv', 'type': 'file'}}) }}
-                </div>
-                <div class="existing-file">
-                    <a href="#!" target="_blank">
-                        <i class="material-icons">&#xE24D;</i>
-                        CV.pdf</a>
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload your Curriculum Vitae" readonly>
-                </div>
-                {{ form_errors(form.fichiers.cvFile) }}
-            </div>
+						<div class="file-field input-field">
+							<div class="btn btn-lg primary waves-effect waves-light">
+								<span>
+									<i class="material-icons">&#xE24D;</i>
+									Passport</span>
+									 {{ form_widget(form.fichiers.passeportFile, {'attr': {'onchange': 'previewCv(event)'}}) }}
+        {{ form_errors(form.fichiers.passeportFile) }}
+								
+							</div>
+							<div class="existing-file" id="cvLinkContainer">
+        {% set passeportFile = form.fichiers.vars.value.getCheminCv() %}
+        {% if passeportFile %}
+            <a href="{{ asset('uploads/cvs/' ~ passeportFile) }}" target="_blank" id="cvLink">
+                <i class="material-icons">&#xE24D;</i>
+                {{ passeportFile }}
+            </a>
+        {% endif %}
+    </div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
+							</div>
+						</div>
+
+
+						{# FORM CV #}
+
+						<div class="file-field input-field" style="margin-top: 32px;">
+    <div class="btn btn-lg primary waves-effect waves-light">
+        <span>
+            <i class="material-icons">insert_drive_file</i>
+            CV</span>
+        {{ form_widget(form.fichiers.cvFile, {'attr': {'onchange': 'previewCv(event)'}}) }}
+        {{ form_errors(form.fichiers.cvFile) }}
+    </div>
+
+    <div class="existing-file" id="cvLinkContainer">
+        {% set cvFile = form.fichiers.vars.value.getCheminCv() %}
+        {% if cvFile %}
+            <a href="{{ asset('uploads/cvs/' ~ cvFile) }}" target="_blank" id="cvLink">
+                <i class="material-icons">&#xE24D;</i>
+                {{ cvFile }}
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="Upload your CV" readonly>
+    </div>
+</div>
+
+
 
 					</div>
-					
 				</div>
+				
 
-				<div
-					class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-sm-6">
+					<div
+						class="col-xs-12 col-sm-12">
 
-					{# input Job Category #}
-					<div class="col-xs-12 col-sm-12">
+						{# FORM JOB SECTOR #}
+
 						<div class="input-field" style="margin-top: 5px;">
-							
-
-                             {{ form_label(form.categorie, 'Interest in job sector') }}
-                {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.categorie) }}
+							{{ form_widget(form.categorie) }}
+								{{ form_label(form.categorie) }}
+								{{ form_errors(form.categorie) }}
 						</div>
 					</div>
+					<div
+						class="col-xs-12 col-sm-12">
 
-					{# input Job experience #}
-					<div class="col-xs-12 col-sm-12">
+						{# FORM EXPERIENCE #}
+
 						<div class="input-field">
-                               {{ form_label(form.experience, 'Experience') }}
-                {{ form_widget(form.experience, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.experience) }}
+							{{ form_widget(form.experience) }}
+								{{ form_label(form.experience) }}
+								{{ form_errors(form.experience) }}
 						</div>
 					</div>
-
-
 				</div>
+				<div
+					class="col-xs-12 col-sm-12">
 
-				{# input description #}
-				<div class="col-xs-12 col-sm-12">
+					{# FORM DESCRIPTION #}
+
 					<div class="input-field">
-						{# <textarea class="materialize-textarea" id="description" name="description" cols="50" rows="10"></textarea>
-						<label for="description">Short description for your profile, as well as more personnal informations (e.g. your hobbies/interests ). You can also paste any link you want.</label> #}
+								{{ form_label(form.description) }}
 
-						 {{ form_label(form.description, 'Description') }}
-                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.description) }}
+						{{ form_widget(form.description) }}
+								{{ form_errors(form.description) }}
 					</div>
 				</div>
 			</div>
@@ -307,25 +340,31 @@
 		<div class="container">
 			<div class="row">
 				<h3 class="text-extrabold">Your K-Yachting account</h3>
+				<div
+					class="col-xs-12 col-sm-4">
 
-				{# input email #}
-				<div class="col-xs-12 col-sm-4">
+					{# FORM EMAIL #}
+
 					<div class="input-field">
 						<input id="email" name="email" type="email" value="">
 						<label for="email">Email</label>
 					</div>
 				</div>
+				<div
+					class="col-xs-12 col-sm-4">
 
-				{# input change password #}
-				<div class="col-xs-12 col-sm-4">
+					{# FORM PASSWORD #}
+
 					<div class="input-field">
 						<input id="password" name="password" type="password" value="">
 						<label for="password">Change your password here</label>
 					</div>
 				</div>
+				<div
+					class="col-xs-12 col-sm-4">
 
-				{# input confirm password #}
-				<div class="col-xs-12 col-sm-4">
+					{# FORM CONFIRM PASSWORD #}
+
 					<div class="input-field">
 						<input id="password_repeat" name="password_repeat" type="password" value="">
 						<label for="password_repeat">Confirm your new password</label>
@@ -344,6 +383,7 @@
 						<i class="fa fa-long-arrow-left"></i>
 						Back home</a>
 				</div>
+
 				<div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-4">
 					<button type="submit" class="btn btn-block btn-lg gradient secondary waves-effect waves-light">
 						<span>
@@ -356,13 +396,49 @@
 		</div>
 	</section>
 	{{ form_end(form) }}
-
-
 {% endblock %}
 
-
 {% block javascriptFooter %}
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+<script>
+function previewCv(event) {
+    var cvFileName = event.target.files[0].name; // Récupérer le nom du fichier sélectionné
+    var cvLinkContainer = document.getElementById('cvLinkContainer'); // Conteneur du lien du CV
+    var cvLink = document.getElementById('cvLink'); // Lien actuel
+
+    // Si un lien existe déjà, on le met à jour
+    if (cvLink) {
+        cvLink.href = URL.createObjectURL(event.target.files[0]); // Utilisation de l'URL temporaire pour le fichier
+        cvLink.textContent = cvFileName; // Mettre à jour le texte du lien avec le nom du fichier
+    } else {
+        // Si le lien n'existe pas encore, en créer un nouveau
+        var newCvLink = document.createElement('a');
+        newCvLink.href = URL.createObjectURL(event.target.files[0]);
+        newCvLink.target = '_blank';
+        newCvLink.id = 'cvLink';
+        newCvLink.innerHTML = `<i class="material-icons">&#xE24D;</i> ${cvFileName}`;
+
+        // Ajouter le lien à l'élément de conteneur
+        cvLinkContainer.appendChild(newCvLink);
+    }
+}
+</script>
+
 	<script type="text/javascript">
+
+	
+
 		onAppReady(function () {
 $('.preload').remove();
 });

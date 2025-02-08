@@ -24,9 +24,21 @@ class Categorie
     #[ORM\OneToMany(targetEntity: Candidat::class, mappedBy: 'categorie')]
     private Collection $candidats;
 
+    /**
+     * @var Collection<int, OffreEmploi>
+     */
+    #[ORM\OneToMany(targetEntity: OffreEmploi::class, mappedBy: 'categorie')]
+    private Collection $offreEmplois;
+
+    
+    public function __toString(): string
+    {
+        return $this->nom;
+    }
     public function __construct()
     {
         $this->candidats = new ArrayCollection();
+        $this->offreEmplois = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,6 +82,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($candidat->getCategorie() === $this) {
                 $candidat->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OffreEmploi>
+     */
+    public function getOffreEmplois(): Collection
+    {
+        return $this->offreEmplois;
+    }
+
+    public function addOffreEmploi(OffreEmploi $offreEmploi): static
+    {
+        if (!$this->offreEmplois->contains($offreEmploi)) {
+            $this->offreEmplois->add($offreEmploi);
+            $offreEmploi->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffreEmploi(OffreEmploi $offreEmploi): static
+    {
+        if ($this->offreEmplois->removeElement($offreEmploi)) {
+            // set the owning side to null (unless already changed)
+            if ($offreEmploi->getCategorie() === $this) {
+                $offreEmploi->setCategorie(null);
             }
         }
 

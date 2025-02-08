@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\CandidatureRepository;
@@ -25,9 +24,18 @@ class Candidature
     #[ORM\Column]
     private ?\DateTimeImmutable $deleted_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'candidature')]
+    #[ORM\ManyToOne(inversedBy: 'candidatures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Candidat $candidat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'candidatures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?OffreEmploi $offreEmploi = null;
+
+    public function __toString(): string
+    {
+        return $this->statut;
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +98,18 @@ class Candidature
     public function setCandidat(?Candidat $candidat): static
     {
         $this->candidat = $candidat;
+
+        return $this;
+    }
+
+    public function getOffreEmploi(): ?OffreEmploi
+    {
+        return $this->offreEmploi;
+    }
+
+    public function setOffreEmploi(?OffreEmploi $offreEmploi): static
+    {
+        $this->offreEmploi = $offreEmploi;
 
         return $this;
     }

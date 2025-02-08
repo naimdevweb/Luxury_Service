@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,6 +40,22 @@ class Client
     #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    /**
+     * @var Collection<int, OffreEmploi>
+     */
+    #[ORM\OneToMany(targetEntity: OffreEmploi::class, mappedBy: 'client')]
+    private Collection $offreEmplois;
+
+    
+    public function __toString(): string
+    {
+        return $this->nom_de_la_societe;
+    }
+    public function __construct()
+    {
+        $this->offreEmplois = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +154,36 @@ class Client
     public function setUser(User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OffreEmploi>
+     */
+    public function getOffreEmplois(): Collection
+    {
+        return $this->offreEmplois;
+    }
+
+    public function addOffreEmploi(OffreEmploi $offreEmploi): static
+    {
+        if (!$this->offreEmplois->contains($offreEmploi)) {
+            $this->offreEmplois->add($offreEmploi);
+            $offreEmploi->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffreEmploi(OffreEmploi $offreEmploi): static
+    {
+        if ($this->offreEmplois->removeElement($offreEmploi)) {
+            // set the owning side to null (unless already changed)
+            if ($offreEmploi->getClient() === $this) {
+                $offreEmploi->setClient(null);
+            }
+        }
 
         return $this;
     }

@@ -3,9 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Candidat;
+use App\Entity\Candidature;
 use App\Entity\Client;
 use App\Entity\ExperienceProfessionel;
 use App\Entity\Genre;
+use App\Entity\OffreEmploi;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -57,5 +59,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Candidat', 'fas fa-list', Candidat::class);
         yield MenuItem::linkToCrud('ExperienceProfessionel', 'fas fa-list', ExperienceProfessionel::class);
         yield MenuItem::linkToCrud('Client', 'fas fa-list', Client::class);
+        yield MenuItem::linkToCrud('OffreEmploi', 'fas fa-list', OffreEmploi::class);
+        yield MenuItem::linkToCrud('Candidature', 'fas fa-list', Candidature::class);
     }
 }

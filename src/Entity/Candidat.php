@@ -78,6 +78,13 @@ class Candidat
      */
     #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'candidat')]
     private Collection $candidature;
+    
+   
+    public function __toString(): string
+    {
+        return $this->nom ?? '';
+    }
+
     public function __construct()
     {
         $this->created_at = new DateTimeImmutable();
@@ -304,6 +311,8 @@ class Candidat
 
         return $this;
     }
+
+    
 
     /**
      * @return Collection<int, Candidature>

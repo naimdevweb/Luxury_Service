@@ -38,6 +38,13 @@ class Fichiers
     #[ORM\OneToOne(mappedBy: 'fichiers', cascade: ['persist', 'remove'])]
     private ?Candidat $candidat = null;
 
+    public function __toString()
+    {
+        return $this->chemin_photo;
+    }
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
