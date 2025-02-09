@@ -21,7 +21,7 @@ class Candidature
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $deleted_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'candidatures')]
@@ -83,7 +83,7 @@ class Candidature
         return $this->deleted_at;
     }
 
-    public function setDeletedAt(\DateTimeImmutable $deleted_at): static
+    public function setDeletedAt(?\DateTimeImmutable $deleted_at): static
     {
         $this->deleted_at = $deleted_at;
 

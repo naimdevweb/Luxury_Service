@@ -302,24 +302,28 @@
 
 
 
-     <section id="job-offers" class="section-padding gray-bg">
+    <section id="job-offers" class="section-padding gray-bg">
     <div class="container">
         <div class="text-center mb-40">
-            <h2 class="section-title">Job offers</h2>
-            <p class="section-sub">Just like our candidates, we offer quality, serious & reliable positions. Come discover them and we will put you in contact with the perfect team for you to form the perfect crew.</p>
+            <h2 class="section-title">We have the perfect job for you</h2>
+            <p class="section-sub">Just like our candidates, we offer quality, serious & reliable job offers.</p>
         </div>
         <div class="portfolio-container">
 
-         <ul class="portfolio-filter brand-filter text-center">
-    <li class="active waves-effect waves-light" data-group="all">All</li>
-    {% if categories is not empty %}
-        {% for categorie in categories %}
-            <li class="waves-effect waves-light" data-group="{{ categorie.nom }}">{{ categorie.nom }}</li>
+            <ul class="portfolio-filter brand-filter text-center">
+                <li class="active waves-effect waves-light" data-group="all">All</li>
+                {% for categorie in categories %}
+                    <li class="waves-effect waves-light" data-group="{{ categorie.nom }}">{{ categorie.nom }}</li>
+                {% endfor %}
+            </ul>
+            
+            {% for label, messages in app.flashes %}
+    <div class="alert alert-{{ label }}">
+        {% for message in messages %}
+            <p>{{ message }}</p>
         {% endfor %}
-    {% else %}
-        <li class="waves-effect waves-light">No categories available</li>
-    {% endif %}
-</ul>
+    </div>
+{% endfor %}
 
             <div class="portfolio portfolio-with-title col-2 gutter mt-30">
                 {% for offre in offres %}
@@ -329,17 +333,8 @@
                                 <div class="card-content">
                                     <span class="title">
                                         <span class="card-title">{{ offre.titre }}</span>
+                                        <span class="ref grey-text">Ref. {{ offre.id }}</span>
                                     </span>
-                                    
-
-                                    {% for label, messages in app.flashes %}
-    <div class="alert alert-{{ label }}">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    </div>
-{% endfor %}
-
                                     <div class="metas mb-20">
                                         <div class="meta">
                                             <i class="material-icons">&#xE53E;</i>{{ offre.salaire }}&euro;
@@ -355,16 +350,14 @@
                                 </div>
                                 <div class="card-action">
                                     <a class="btn btn-md primary border waves-effect waves-dark" href="{{ path('app_offre_emploi_show', {id: offre.id}) }}">Details</a>
-
-                                   {% if app.user and app.user.candidat %}
+                                    {% if app.user and app.user.candidat %}
                                         <form action="{{ path('candidature_postuler', {id: offre.id}) }}" method="post" style="display:inline;">
                                             <input type="hidden" name="candidat_id" value="{{ app.user.candidat.id }}">
                                             <button type="submit" class="btn btn-md primary waves-effect waves-light">Apply</button>
                                         </form>
                                     {% else %}
-        <a class="btn btn-md primary waves-effect waves-light" href="{{ path('app_login') }}">Login to Apply</a>
-    {% endif %}
-
+                                        <a class="btn btn-md primary waves-effect waves-light" href="{{ path('app_login') }}">Login to Apply</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -375,6 +368,10 @@
                     </div>
                 {% endfor %}
             </div>
+        </div>
+    </div>
+</section>
+
 
             <div class="no-item"></div>
 
@@ -385,6 +382,7 @@
         </div>
     </div>
 </section>
+
 
 
     </div>

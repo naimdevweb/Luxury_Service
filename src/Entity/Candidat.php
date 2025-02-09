@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\CandidatRepository;
@@ -47,8 +46,6 @@ class Candidat
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lieu_naissance = null;
 
-    
-
     #[ORM\ManyToOne(inversedBy: 'candidats')]
     private ?Categorie $categorie = null;
 
@@ -78,19 +75,40 @@ class Candidat
      */
     #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'candidat')]
     private Collection $candidature;
-    
-   
+
     public function __toString(): string
     {
         return $this->nom ?? '';
+    }
+
+
+    public function isProfileComplete(): bool
+    {
+        return $this->nom !== null &&
+               $this->prenom !== null &&
+               $this->localisation !== null &&
+               $this->adresse !== null &&
+               $this->pays !== null &&
+               $this->nationalite !== null &&
+               $this->date_naissance !== null &&
+               $this->lieu_naissance !== null &&
+               $this->categorie !== null &&
+               $this->genre !== null &&
+               $this->experience !== null &&
+               $this->description !== null &&
+               $this->fichiers !== null &&
+               $this->fichiers->getCheminPhoto() !== null &&
+               $this->fichiers->getCheminCv() !== null &&
+               $this->fichiers->getCheminPasseport() !== null;
+               
     }
 
     public function __construct()
     {
         $this->created_at = new DateTimeImmutable();
         $this->candidature = new ArrayCollection();
-      
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -185,7 +203,7 @@ class Candidat
         return $this->date_naissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $date_naissance): static
+    public function setDateNaissance(?\DateTimeInterface $date_naissance): static
     {
         $this->date_naissance = $date_naissance;
 
@@ -311,8 +329,6 @@ class Candidat
 
         return $this;
     }
-
-    
 
     /**
      * @return Collection<int, Candidature>

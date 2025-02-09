@@ -25,6 +25,7 @@ class CandidatType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
+                'required' => false,
                 'attr' => [
                     'id' => 'last_name',
                     'class' => 'form-control'
@@ -32,6 +33,7 @@ class CandidatType extends AbstractType
             ])
             ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
+                'required' => false,
                 'attr' => [
                     'id' => 'last_name',
                     'class' => 'form-control'
@@ -39,6 +41,7 @@ class CandidatType extends AbstractType
             ])
             ->add('localisation', TextType::class, [
                 'label' => 'Localisation',
+                'required' => false,
                 'attr' => [
                     'id' => 'current_location',
                     'class' => 'form-control'
@@ -46,6 +49,7 @@ class CandidatType extends AbstractType
             ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
+                'required' => false,
                 'attr' => [
                     'id' => 'address',
                     'class' => 'form-control'
@@ -53,6 +57,7 @@ class CandidatType extends AbstractType
             ])
             ->add('pays', TextType::class, [
                 'label' => 'Pays',
+                'required' => false,
                 'attr' => [
                     'id' => 'country',
                     'class' => 'form-control'
@@ -60,6 +65,7 @@ class CandidatType extends AbstractType
             ])
             ->add('nationalite', TextType::class, [
                 'label' => 'Nationalite',
+                'required' => false,
                 'attr' => [
                     'id' => 'nationality',
                     'class' => 'form-control'
@@ -69,6 +75,7 @@ class CandidatType extends AbstractType
 
             ->add('date_naissance', DateTimeType::class, [
                 'label' => 'Date_naissance',
+                'required' => false,
                 'attr' => [
                     'id' => 'birth_date',
                     'class' => 'form-control'
@@ -78,6 +85,7 @@ class CandidatType extends AbstractType
 
             ->add('lieu_naissance', TextType::class, [
                 'label' => 'Lieu_naissance',
+                'required' => false,
                 'attr' => [
                     'id' => 'birth_place',
                     'class' => 'form-control'
@@ -86,6 +94,7 @@ class CandidatType extends AbstractType
 
             ->add('description', TextType::class, [
                 'label' => 'Description',
+                'required' => false,
                 'attr' => [
                     'id' => 'description',
                     'class' => 'form-control'
@@ -94,6 +103,7 @@ class CandidatType extends AbstractType
 
             ->add('genre', EntityType::class, [
                 'class' => Genre::class,
+                'required' => false,
                 'choice_label' => 'nom',
                 'expanded' => true,
                 'label' => 'Genre',
@@ -108,6 +118,7 @@ class CandidatType extends AbstractType
             ->add('experience', EntityType::class, [
                 'class' => ExperienceProfessionel::class,
                 'choice_label' => 'nom',
+              
                 'expanded' => true,
                 'label' => 'Experience',
                 'attr' => [
@@ -119,6 +130,7 @@ class CandidatType extends AbstractType
 
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
+                
                 'choice_label' => 'nom',
                 'expanded' => true,
                 'label' => 'Interest in job sector',
@@ -132,6 +144,7 @@ class CandidatType extends AbstractType
 
             ->add('fichiers', FichiersType::class, [
                 'label' => false,
+                
             ]);
            
 

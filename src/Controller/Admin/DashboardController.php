@@ -8,6 +8,7 @@ use App\Entity\Client;
 use App\Entity\ExperienceProfessionel;
 use App\Entity\Genre;
 use App\Entity\OffreEmploi;
+use App\Entity\TypeContrat;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -16,12 +17,19 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+       $user = $this->getUser();
+        if($user->getRoles()[0] == "ROLE_ADMIN"){
+            return $this->render('admin\dashboard.html.twig');
+        }else{
+            return $this->redirectToRoute('easyadmin');
+        }
         // return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
@@ -61,5 +69,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Client', 'fas fa-list', Client::class);
         yield MenuItem::linkToCrud('OffreEmploi', 'fas fa-list', OffreEmploi::class);
         yield MenuItem::linkToCrud('Candidature', 'fas fa-list', Candidature::class);
+        yield MenuItem::linkToCrud('TypeContrat', 'fas fa-list', TypeContrat::class);
     }
 }

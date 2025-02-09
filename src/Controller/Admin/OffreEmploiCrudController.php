@@ -24,7 +24,7 @@ class OffreEmploiCrudController extends AbstractCrudController
     {
         return [
             TextField::new('titre'),
-            TextEditorField::new('description'),
+            TextField::new('description'),
             TextField::new('localisation'),
             TextField::new('note'),
             NumberField::new('salaire'),
@@ -33,6 +33,8 @@ class OffreEmploiCrudController extends AbstractCrudController
             DateTimeField::new('updated_at'),
             AssociationField::new('categorie'),
             AssociationField::new('client'),
+            AssociationField::new('typeContrat'),
+
         ];
     }
     

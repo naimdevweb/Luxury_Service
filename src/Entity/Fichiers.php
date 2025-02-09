@@ -24,9 +24,8 @@ class Fichiers
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $chemin_cv = null;
 
-
     #[Vich\UploadableField(mapping: 'candidat_cv', fileNameProperty: 'chemin_cv')]
-    #[Assert\File(maxSize: '5M', extensions: ['pdf'], extensionsMessage: 'Please upload a valid PDF', mimeTypes: ['application/pdf'], mimeTypesMessage: 'Please upload a valid PDF file')]
+    #[Assert\File(maxSize: '5M', mimeTypes: ['application/pdf'], mimeTypesMessage: 'Please upload a valid PDF file')]
     private ?File $cvFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -37,13 +36,6 @@ class Fichiers
 
     #[ORM\OneToOne(mappedBy: 'fichiers', cascade: ['persist', 'remove'])]
     private ?Candidat $candidat = null;
-
-    public function __toString()
-    {
-        return $this->chemin_photo;
-    }
-
-    
 
     public function getId(): ?int
     {
@@ -61,14 +53,14 @@ class Fichiers
         return $this;
     }
 
-    public function setPhotoFile(?File $photoFile = null): void
-    {
-        $this->photoFile = $photoFile;
-    }
-
     public function getPhotoFile(): ?File
     {
         return $this->photoFile;
+    }
+
+    public function setPhotoFile(?File $photoFile = null): void
+    {
+        $this->photoFile = $photoFile;
     }
 
     public function getCheminCv(): ?string
@@ -82,14 +74,14 @@ class Fichiers
         return $this;
     }
 
-    public function setCvFile(?File $cvFile = null): void
-    {
-        $this->cvFile = $cvFile;
-    }
-
     public function getCvFile(): ?File
     {
         return $this->cvFile;
+    }
+
+    public function setCvFile(?File $cvFile = null): void
+    {
+        $this->cvFile = $cvFile;
     }
 
     public function getCheminPasseport(): ?string
@@ -103,14 +95,14 @@ class Fichiers
         return $this;
     }
 
-    public function setPasseportFile(?File $passeportFile = null): void
-    {
-        $this->passeportFile = $passeportFile;
-    }
-
     public function getPasseportFile(): ?File
     {
         return $this->passeportFile;
+    }
+
+    public function setPasseportFile(?File $passeportFile = null): void
+    {
+        $this->passeportFile = $passeportFile;
     }
 
     public function getCandidat(): ?Candidat

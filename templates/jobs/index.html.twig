@@ -46,143 +46,74 @@
         </section>
 
         <!-- Page Content-->
-        <section id="job-offers" class="section-padding gray-bg">
-            <div class="container">
-                <div class="text-center mb-40">
-                    <h2 class="section-title">We have the perfect job for you</h2>
-                    <p class="section-sub">just like our candidates, we offer quality, serious & reliable job offers.</p>
-                </div>
-                <div class="portfolio-container">
+       <section id="job-offers" class="section-padding gray-bg">
+    <div class="container">
+        <div class="text-center mb-40">
+            <h2 class="section-title">We have the perfect job for you</h2>
+            <p class="section-sub">Just like our candidates, we offer quality, serious & reliable job offers.</p>
+        </div>
+        <div class="portfolio-container">
 
-                    <ul class="portfolio-filter brand-filter text-center">
-                        <li class="active waves-effect waves-light" data-group="all">All</li>
-                        <li class=" waves-effect waves-light" data-group="commercial">Commercial</li>
-                        <li class=" waves-effect waves-light" data-group="retail">Retail sales</li>
-                        <li class=" waves-effect waves-light" data-group="creative">Creative</li>
-                        <li class=" waves-effect waves-light" data-group="technology">Technology</li>
-                        <li class=" waves-effect waves-light" data-group="marketing">Marketing & PR</li>
-                        <li class=" waves-effect waves-light" data-group="fashion">Fashion & luxury</li>
-                        <li class=" waves-effect waves-light" data-group="management">Management & HR</li>
-                    </ul>
-                    <div class="portfolio portfolio-with-title col-2 gutter mt-30">
-
-                        <div class="portfolio-item" data-groups='["all", "commercial"]'>
-                            <div class="portfolio-wrapper">
-                                <div class="card job-card">
-                                    <div class="card-content">
-                                        <span class="title">
-                                            <span class="card-title">2nd assistant position</span>
-                                            <span class="ref grey-text">Ref. 1062</span>
-                                        </span>
-                                        <div class="metas mb-20">
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE53E;</i>45k&euro;
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE916;</i>2018-10-01
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE55F;</i>Paris
-                                            </div>
+            <ul class="portfolio-filter brand-filter text-center">
+                <li class="active waves-effect waves-light" data-group="all">All</li>
+                {% for categorie in categories %}
+                    <li class="waves-effect waves-light" data-group="{{ categorie.nom }}">{{ categorie.nom }}</li>
+                {% endfor %}
+            </ul>
+{% for label, messages in app.flashes %}
+    <div class="alert alert-{{ label }}">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endfor %}    
+            <div class="portfolio portfolio-with-title col-2 gutter mt-30">
+                {% for offre in offres %}
+                    <div class="portfolio-item" data-groups='["all", "{{ offre.categorie.nom }}"]'>
+                        <div class="portfolio-wrapper">
+                            <div class="card job-card">
+                                <div class="card-content">
+                                    <span class="title">
+                                        <span class="card-title">{{ offre.titre }}</span>
+                                        <span class="ref grey-text">Ref. {{ offre.id }}</span>
+                                    </span>
+                                    <div class="metas mb-20">
+                                        <div class="meta">
+                                            <i class="material-icons">&#xE53E;</i>{{ offre.salaire }}&euro;
                                         </div>
-                                        <p class="truncate-text">Nulla interdum, erat et mollis eleifend, urna turpis pellentesque dolor, sed rhoncus erat est sit amet diam. Aliquam dignissim ipsum nec lorem pulvinar.</p>
+                                        <div class="meta">
+                                            <i class="material-icons">&#xE916;</i>{{ offre.createdAt|date('Y-m-d') }}
+                                        </div>
+                                        <div class="meta">
+                                            <i class="material-icons">&#xE55F;</i>{{ offre.localisation }}
+                                        </div>
                                     </div>
-                                    <div class="card-action">
-                                        <a class="btn btn-md primary border waves-effect waves-dark" href="/show">Details</a>
-                                        <a class="btn btn-md primary waves-effect waves-light" href="#!">Apply</a>
-                                    </div>
+                                    <p class="truncate-text">{{ offre.description }}</p>
+                                </div>
+                                <div class="card-action">
+                                    <a class="btn btn-md primary border waves-effect waves-dark" href="{{ path('app_offre_emploi_show', {id: offre.id}) }}">Details</a>
+                                    {% if app.user and app.user.candidat %}
+                                        <form action="{{ path('candidature_postuler', {id: offre.id}) }}" method="post" style="display:inline;">
+                                            <input type="hidden" name="candidat_id" value="{{ app.user.candidat.id }}">
+                                            <button type="submit" class="btn btn-md primary waves-effect waves-light">Apply</button>
+                                        </form>
+                                    {% else %}
+                                        <a class="btn btn-md primary waves-effect waves-light" href="{{ path('app_login') }}">Login to Apply</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
-                        <div class="portfolio-item" data-groups='["all", "commercial"]'>
-                            <div class="portfolio-wrapper">
-                                <div class="card job-card">
-                                    <div class="card-content">
-                                        <span class="title">
-                                            <span class="card-title">2nd assistant position</span>
-                                            <span class="ref grey-text">Ref. 1062</span>
-                                        </span>
-                                        <div class="metas mb-20">
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE53E;</i>45k&euro;
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE916;</i>2018-10-01
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE55F;</i>Paris
-                                            </div>
-                                        </div>
-                                        <p class="truncate-text">Nulla interdum, erat et mollis eleifend, urna turpis pellentesque dolor, sed rhoncus erat est sit amet diam. Aliquam dignissim ipsum nec lorem pulvinar.</p>
-                                    </div>
-                                    <div class="card-action">
-                                        <a class="btn btn-md primary border waves-effect waves-dark" href="/show">Details</a>
-                                        <a class="btn btn-md primary waves-effect waves-light" href="#!">Apply</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portfolio-item" data-groups='["all", "commercial"]'>
-                            <div class="portfolio-wrapper">
-                                <div class="card job-card">
-                                    <div class="card-content">
-                                        <span class="title">
-                                            <span class="card-title">2nd assistant position</span>
-                                            <span class="ref grey-text">Ref. 1062</span>
-                                        </span>
-                                        <div class="metas mb-20">
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE53E;</i>45k&euro;
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE916;</i>2018-10-01
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE55F;</i>Paris
-                                            </div>
-                                        </div>
-                                        <p class="truncate-text">Nulla interdum, erat et mollis eleifend, urna turpis pellentesque dolor, sed rhoncus erat est sit amet diam. Aliquam dignissim ipsum nec lorem pulvinar.</p>
-                                    </div>
-                                    <div class="card-action">
-                                        <a class="btn btn-md primary border waves-effect waves-dark" href="/show">Details</a>
-                                        <a class="btn btn-md primary waves-effect waves-light" href="#!">Apply</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portfolio-item" data-groups='["all", "commercial"]'>
-                            <div class="portfolio-wrapper">
-                                <div class="card job-card">
-                                    <div class="card-content">
-                                        <span class="title">
-                                            <span class="card-title">2nd assistant position</span>
-                                            <span class="ref grey-text">Ref. 1062</span>
-                                        </span>
-                                        <div class="metas mb-20">
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE53E;</i>45k&euro;
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE916;</i>2018-10-01
-                                            </div>
-                                            <div class="meta">
-                                                <i class="material-icons">&#xE55F;</i>Paris
-                                            </div>
-                                        </div>
-                                        <p class="truncate-text">Nulla interdum, erat et mollis eleifend, urna turpis pellentesque dolor, sed rhoncus erat est sit amet diam. Aliquam dignissim ipsum nec lorem pulvinar.</p>
-                                    </div>
-                                    <div class="card-action">
-                                        <a class="btn btn-md primary border waves-effect waves-dark" href="/show">Details</a>
-                                        <a class="btn btn-md primary waves-effect waves-light" href="#!">Apply</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="no-item"></div>
                     </div>
-                </div>
+                {% endfor %}
+                <div class="no-item"></div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
+    
+
+        
 
         <section class="cta-candidate bg-fixed bg-cover overlay dark-5 padding-top-70 padding-bottom-50">
             <div class="container">

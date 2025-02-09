@@ -66,9 +66,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
 
         // return the candidat associated with the user
-
-        
-
         return $this->candidat;
 
     }

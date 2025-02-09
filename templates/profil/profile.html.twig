@@ -163,6 +163,7 @@
 
 						  <div class="existing-file">
         {% set photoFile = form.fichiers.vars.value.getCheminPhoto() %}
+		
        
     </div>
 
@@ -241,40 +242,39 @@
 						{# FORM PASSPORT #}
 
 						<div class="file-field input-field">
-							<div class="btn btn-lg primary waves-effect waves-light">
-								<span>
-									<i class="material-icons">&#xE24D;</i>
-									Passport</span>
-									 {{ form_widget(form.fichiers.passeportFile, {'attr': {'onchange': 'previewCv(event)'}}) }}
+    <div class="btn btn-lg primary waves-effect waves-light">
+        <span>
+            <i class="material-icons">&#xE24D;</i>
+            Passport
+        </span>
+        {{ form_widget(form.fichiers.passeportFile, {'attr': {'onchange': 'previewCv(event)'}}) }}
         {{ form_errors(form.fichiers.passeportFile) }}
-								
-							</div>
-							<div class="existing-file" id="cvLinkContainer">
-        {% set passeportFile = form.fichiers.vars.value.getCheminCv() %}
+    </div>
+    <div class="existing-file" id="passeportLinkContainer">
+        {% set passeportFile = form.fichiers.vars.value.getCheminPasseport() %}
         {% if passeportFile %}
-            <a href="{{ asset('uploads/cvs/' ~ passeportFile) }}" target="_blank" id="cvLink">
+            <a href="{{ asset('uploads/passeports/' ~ passeportFile) }}" target="_blank" id="passeportLink">
                 <i class="material-icons">&#xE24D;</i>
                 {{ passeportFile }}
             </a>
         {% endif %}
     </div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
-							</div>
-						</div>
+    <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
+    </div>
+</div>
 
+{# FORM CV #}
 
-						{# FORM CV #}
-
-						<div class="file-field input-field" style="margin-top: 32px;">
+<div class="file-field input-field" style="margin-top: 32px;">
     <div class="btn btn-lg primary waves-effect waves-light">
         <span>
             <i class="material-icons">insert_drive_file</i>
-            CV</span>
+            CV
+        </span>
         {{ form_widget(form.fichiers.cvFile, {'attr': {'onchange': 'previewCv(event)'}}) }}
         {{ form_errors(form.fichiers.cvFile) }}
     </div>
-
     <div class="existing-file" id="cvLinkContainer">
         {% set cvFile = form.fichiers.vars.value.getCheminCv() %}
         {% if cvFile %}
@@ -284,12 +284,10 @@
             </a>
         {% endif %}
     </div>
-
     <div class="file-path-wrapper">
         <input class="file-path validate" type="text" placeholder="Upload your CV" readonly>
     </div>
-</div>
-
+</div
 
 
 					</div>

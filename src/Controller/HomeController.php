@@ -1,25 +1,26 @@
 <?php
-
 namespace App\Controller;
 
-use App\Entity\OffreEmploi;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\CategorieRepository;
+use App\Repository\OffreEmploiRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class HomeController extends AbstractController
+class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(ManagerRegistry $doctrine, CategorieRepository $categorieRepository): Response
+    public function index(CategorieRepository $categorieRepository, OffreEmploiRepository $offreEmploiRepository): Response
     {
-        $offres = $doctrine->getRepository(OffreEmploi::class)->findAll();
         $categories = $categorieRepository->findAll();
+        $offres = $offreEmploiRepository->findAll();
+
+        // Ajoutez cette ligne pour vérifier les données
+        //  dd($offres, $categories);
 
         return $this->render('home/index.html.twig', [
-            'offres' => $offres,
             'categories' => $categories,
+            'offres' => $offres,
         ]);
     }
 }

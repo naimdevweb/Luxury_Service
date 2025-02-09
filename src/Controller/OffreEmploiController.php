@@ -16,6 +16,7 @@ final class OffreEmploiController extends AbstractController
     #[Route(name: 'app_offre_emploi_index', methods: ['GET'])]
     public function index(OffreEmploiRepository $offreEmploiRepository): Response
     {
+        
         return $this->render('offre_emploi/index.html.twig', [
             'offre_emplois' => $offreEmploiRepository->findAll(),
         ]);

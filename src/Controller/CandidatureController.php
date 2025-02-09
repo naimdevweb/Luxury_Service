@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Candidature;
@@ -10,19 +9,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\CandidatureType;
+use App\Repository\CategorieRepository;
 
 #[Route('/candidature')]
 final class CandidatureController extends AbstractController
 {
     #[Route('/postuler/{id}', name: 'candidature_postuler', methods: ['POST'])]
-    public function postuler(Request $request, OffreEmploi $offre, EntityManagerInterface $entityManager): Response
+    public function postuler(Request $request, OffreEmploi $offre, EntityManagerInterface $entityManager, CategorieRepository $categorieRepository): Response
     {
+        $categories = $categorieRepository->findAll();
         $user = $this->getUser();
+        $offres = $entityManager->getRepository(OffreEmploi::class)->findAll();
         $candidat = $user->getCandidat();
 
-        if (!$candidat) {
+        if (!$candidat || !$candidat->isProfileComplete()) {
             $this->addFlash('error', 'Vous devez compléter votre profil avant de postuler à une offre.');
-            return $this->redirectToRoute('app_profil');
+            return $this->render('home/index.html.twig', [
+                'offres' => $offres,
+                'categories' => $categories,
+            ]);
         }
 
         // Vérifiez si une candidature existe déjà pour cet utilisateur et cette offre
@@ -33,7 +38,10 @@ final class CandidatureController extends AbstractController
 
         if ($existingCandidature) {
             $this->addFlash('error', 'Vous avez déjà postulé à cette offre.');
-            return $this->redirectToRoute('app_home');
+            return $this->render('home/index.html.twig', [
+                'offres' => $offres,
+                'categories' => $categories,
+            ]);
         }
 
         if ($candidat && $offre) {
@@ -43,7 +51,6 @@ final class CandidatureController extends AbstractController
             $candidature->setStatut('En attente');
             $candidature->setCreatedAt(new \DateTimeImmutable());
             $candidature->setUpdatedAt(new \DateTimeImmutable());
-            $candidature->setDeletedAt(new \DateTimeImmutable());
 
             $entityManager->persist($candidature);
             $entityManager->flush();
@@ -53,10 +60,11 @@ final class CandidatureController extends AbstractController
             $this->addFlash('error', 'Erreur lors de la soumission de votre candidature.');
         }
 
-        return $this->redirectToRoute('app_home');
+        return $this->render('home/index.html.twig', [
+            'categories' => $categories,
+            'offres' => $offres,
+        ]);
     }
-
-
 
     #[Route('/{id}', name: 'app_candidature_show', methods: ['GET'])]
     public function show(Candidature $candidature): Response

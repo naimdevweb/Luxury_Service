@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\OffreEmploiRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
+use Doctrine\DBAL\Types\Types; 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OffreEmploiRepository::class)]
@@ -53,16 +52,21 @@ class OffreEmploi
      */
     #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'OffreEmploi')]
     private Collection $candidatures;
-    
-    public function __toString(): string
-    {
-        return $this->titre;
-    }
+
+    #[ORM\ManyToOne(inversedBy: 'offremploi')]
+    private ?TypeContrat $typeContrat = null;
+
+  
 
 
     public function __construct()
     {
         $this->candidatures = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->titre;
     }
 
     public function getId(): ?int
@@ -219,4 +223,21 @@ class OffreEmploi
 
         return $this;
     }
+
+    public function getTypeContrat(): ?TypeContrat
+    {
+        return $this->typeContrat;
+    }
+
+    public function setTypeContrat(?TypeContrat $typeContrat): static
+    {
+        $this->typeContrat = $typeContrat;
+
+        return $this;
+    }
+
+    
+  
+
+   
 }
