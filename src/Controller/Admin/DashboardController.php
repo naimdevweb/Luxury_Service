@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller\Admin;
 
 use App\Entity\Candidat;
@@ -15,8 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\Routing\Annotation\Route;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
@@ -24,33 +22,12 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-       $user = $this->getUser();
-        if($user->getRoles()[0] == "ROLE_ADMIN"){
-            return $this->render('admin\dashboard.html.twig');
-        }else{
+        $user = $this->getUser();
+        if ($user->getRoles()[0] == "ROLE_ADMIN" || "ROLE_RECRUTEUR") {
+            return $this->render('admin/dashboard.html.twig');
+        } else {
             return $this->redirectToRoute('easyadmin');
         }
-        // return parent::index();
-
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        // 1.1) If you have enabled the "pretty URLs" feature:
-        // return $this->redirectToRoute('admin_user_index');
-        //
-        // 1.2) Same example but using the "ugly URLs" that were used in previous EasyAdmin versions:
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
-
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirectToRoute('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        return $this->render('admin\dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -61,14 +38,32 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Genre', 'fas fa-list', Genre::class);
-        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
-        yield MenuItem::linkToCrud('Candidat', 'fas fa-list', Candidat::class);
-        yield MenuItem::linkToCrud('ExperienceProfessionel', 'fas fa-list', ExperienceProfessionel::class);
-        yield MenuItem::linkToCrud('Client', 'fas fa-list', Client::class);
-        yield MenuItem::linkToCrud('OffreEmploi', 'fas fa-list', OffreEmploi::class);
-        yield MenuItem::linkToCrud('Candidature', 'fas fa-list', Candidature::class);
-        yield MenuItem::linkToCrud('TypeContrat', 'fas fa-list', TypeContrat::class);
+        $user = $this->getUser();
+        $roles = $user->getRoles();
+
+        if (in_array('ROLE_ADMIN', $roles)) {
+            yield MenuItem::linkToDashboard('Dashboard', 'fa fa-tachometer-alt');
+            yield MenuItem::section('Jobs');
+            yield MenuItem::linkToCrud('OffreEmploi', 'fas fa-user-tie', OffreEmploi::class);
+            yield MenuItem::section('Candidates');
+            yield MenuItem::linkToCrud('Candidat', 'fas fa-user-tie', Candidat::class);
+            yield MenuItem::linkToCrud('Candidature', 'fas fa-user-tie', Candidature::class);
+            yield MenuItem::section('Recruters');
+            yield MenuItem::linkToCrud('Client', 'fas fa-user-tie', Client::class);
+            yield MenuItem::section('Job Offers');
+            yield MenuItem::linkToCrud('TypeContrat', 'fas fa-user-tie', TypeContrat::class);
+            yield MenuItem::linkToCrud('OffreEmploi', 'fas fa-user-tie', OffreEmploi::class);
+            yield MenuItem::section('Candidates');
+            yield MenuItem::linkToCrud('Genre', 'fas fa-venus-mars', Genre::class);
+            yield MenuItem::linkToCrud('ExperienceProfessionel', 'fas fa-briefcase', ExperienceProfessionel::class);
+            yield MenuItem::section('Recruters');
+            yield MenuItem::linkToCrud('Recruters', 'fas fa-user-tie', User::class);
+        } elseif (in_array('ROLE_RECRUTEUR', $roles)) {
+            yield MenuItem::linkToDashboard('Dashboard', 'fa fa-tachometer-alt');
+            yield MenuItem::section('Jobs');
+            yield MenuItem::linkToCrud('OffreEmploi', 'fas fa-user-tie', OffreEmploi::class);
+            yield MenuItem::section('Candidates');
+            yield MenuItem::linkToCrud('Candidature', 'fas fa-user-tie', Candidature::class);
+        }
     }
 }

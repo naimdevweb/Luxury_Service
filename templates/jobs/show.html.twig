@@ -61,15 +61,28 @@
                                 <li><span> Location </span>{{ offre_emploi.localisation }}</li>
                                 {# <li><span> Starting date </span>{{ offre_emploi.dateDebut|date('Y-m-d') }}</li> #}
                             </ul>
-                            {% if app.user %}
-                                <form action="{{ path('candidature_postuler', {id: offre_emploi.id}) }}" method="post" style="display:inline;">
-                                    <input type="hidden" name="candidat_id" value="{{ app.user.id }}">
-                                    <button type="submit" class="btn btn-block gradient primary mt-30 waves-effect waves-light">Apply for this job</button>
-                                </form>
-                            {% else %}
-                                <a class="btn btn-block gradient primary mt-30 waves-effect waves-light" href="{{ path('app_login') }}">Login to Apply</a>
-                            {% endif %}
-                            <div class="btn btn-block btn-success mt-30 waves-effect waves-light disabled">You have applied for this job</div>
+                           {% if app.user %}
+    {% set has_applied = false %}
+
+    {# Vérifier si l'utilisateur a déjà postulé pour cette offre #}
+    {% for candidature in app.user.candidat.candidature %}
+        {% if candidature.offre.id == offre_emploi.id %}
+            {% set has_applied = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% if has_applied %}
+        <div class="btn btn-block btn-success mt-30 waves-effect waves-light disabled">You have applied for this job</div>
+    {% else %}
+        <form action="{{ path('candidature_postuler', {id: offre_emploi.id}) }}" method="post" style="display:inline;">
+            <input type="hidden" name="candidat_id" value="{{ app.user.id }}">
+            <button type="submit" class="btn btn-block gradient primary mt-30 waves-effect waves-light">Apply for this job</button>
+        </form>
+    {% endif %}
+{% else %}
+    <a class="btn btn-block gradient primary mt-30 waves-effect waves-light" href="{{ path('app_login') }}">Login to Apply</a>
+{% endif %}
+
                         </div>
                     </div>
                 </div>
@@ -78,21 +91,30 @@
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-4">
                             <div class="previous-post-link">
-                                <a class="btn border primary waves-effect waves-dark" href="#!">
-                                    <i class="fa fa-long-arrow-left"></i>Previous
-                                </a>
+                                {% if offre_emploi.id > 1 %}
+                                    <a class="btn border primary waves-effect waves-dark" href="{{ path('app_offre_emploi_show', {id: offre_emploi.id - 1}) }}">
+                                        <i class="fa fa-long-arrow-left"></i> Previous
+                                    </a>
+                                {% else %}
+                                    <span class="btn border primary disabled">
+                                        <i class="fa fa-long-arrow-left"></i> Previous
+                                    </span>
+                                {% endif %}
                             </div>
                         </div>
+
                         <div class="hidden-xs hidden-sm col-md-4"></div>
+
                         <div class="col-xs-6 col-sm-6 col-md-4">
                             <div class="next-post-link">
-                                <a class="btn border primary waves-effect waves-dark" href="#!">
+                                <a class="btn border primary waves-effect waves-dark" href="{{ path('app_offre_emploi_show', {id: offre_emploi.id + 1}) }}">
                                     Next <i class="fa fa-long-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </nav>
+
             </div>
         </section>
 

@@ -188,13 +188,6 @@
 										<li>
 											<a href="{{ path('app_logout') }}">Logout</a>
 										</li>
-									{% else %}
-										<li>
-											<a href="{{ path('app_login') }}">Login</a>
-										</li>
-										<li>
-											<a href="{{ path('app_register') }}">Register</a>
-										</li>
 									{% endif %}
 								</ul>
 							</div>
@@ -202,7 +195,32 @@
 					</div>
 				</div>
 			</header>
-		{% endblock %}
+		{% endblock %}*
+
+
+{% include "partials/flash.html.twig" %}
+
+		{# {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		{% for message in app.flashes('successpassword') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+ #}
+
+
+		
 
 		<div class="base">
 			<!-- Page -->

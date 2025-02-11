@@ -8,6 +8,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -27,7 +29,9 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             TextField::new('email'),
+            BooleanField::new('isVerified'),
             TextField::new('password')
+           
                 ->setFormType(PasswordType::class)
                 ->onlyOnForms(),
         ];

@@ -35,10 +35,8 @@
 	</style>
 {% endblock %}
 
+
 {% block body %}
-{% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
 	<!-- Page Header-->
 	<section class="page-title page-title-bg fixed-bg overlay dark-5 padding-top-160 padding-bottom-80">
 		<div class="container">

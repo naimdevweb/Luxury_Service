@@ -49,6 +49,7 @@ final class OffreEmploiController extends AbstractController
             'offre_emploi' => $offreEmploi,
         ]);
     }
+    
 
     #[Route('/{id}/edit', name: 'app_offre_emploi_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, OffreEmploi $offreEmploi, EntityManagerInterface $entityManager): Response

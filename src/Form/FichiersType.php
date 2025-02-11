@@ -19,7 +19,8 @@ class FichiersType extends AbstractType
                 'allow_delete' => true,
                 'download_uri' => true,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'accept' => 'image/*'
                 ],
             ])
             ->add('cvFile', VichFileType::class, [
@@ -28,7 +29,8 @@ class FichiersType extends AbstractType
                 'allow_delete' => true,
                 'download_uri' => true,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                     'accept' => '.pdf,.jpg,.doc,.docx,.png,.gif'
                 ],
             ])
             ->add('passeportFile', VichFileType::class, [
@@ -37,7 +39,8 @@ class FichiersType extends AbstractType
                 'allow_delete' => true,
                 'download_uri' => true,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'accept' => '.pdf,.jpg,.doc,.docx,.png,.gif'
                 ],
             ]);
     }

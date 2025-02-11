@@ -5,6 +5,7 @@ use App\Repository\CandidatRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Attribute\ProfileCompletion;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -19,9 +20,11 @@ class Candidat
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $prenom = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -29,33 +32,44 @@ class Candidat
     private ?User $user = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $localisation = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $pays = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $nationalite = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ProfileCompletion]
     private ?\DateTimeInterface $date_naissance = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $lieu_naissance = null;
 
     #[ORM\ManyToOne(inversedBy: 'candidats')]
+    #[ProfileCompletion]
     private ?Categorie $categorie = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'candidats')]
+    #[ProfileCompletion]
     private ?Genre $genre = null;
 
     #[ORM\ManyToOne(inversedBy: 'candidats')]
+    #[ProfileCompletion]
     private ?ExperienceProfessionel $experience = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $description = null;
 
     #[ORM\OneToOne(inversedBy: 'candidat', cascade: ['persist', 'remove'])]
@@ -100,6 +114,8 @@ class Candidat
                $this->fichiers->getCheminPhoto() !== null &&
                $this->fichiers->getCheminCv() !== null &&
                $this->fichiers->getCheminPasseport() !== null;
+
+               
                
     }
 

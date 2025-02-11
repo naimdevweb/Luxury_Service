@@ -317,17 +317,10 @@
                 {% endfor %}
             </ul>
             
-            {% for label, messages in app.flashes %}
-    <div class="alert alert-{{ label }}">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    </div>
-{% endfor %}
-
+           
             <div class="portfolio portfolio-with-title col-2 gutter mt-30">
                 {% for offre in offres %}
-                    <div class="portfolio-item" data-groups='["all", "{{ offre.categorie.nom }}"]'>
+                     <div class="portfolio-item" data-groups='["all", "{{ offre.categorie.nom }}"]'> 
                         <div class="portfolio-wrapper">
                             <div class="card job-card">
                                 <div class="card-content">

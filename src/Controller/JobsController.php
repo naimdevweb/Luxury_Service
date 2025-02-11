@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Candidat;
+use App\Entity\OffreEmploi;
 use App\Repository\CategorieRepository;
 use App\Repository\OffreEmploiRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,16 +26,9 @@ class JobsController extends AbstractController
         return $this->render('jobs/index.html.twig', [
             'categories' => $categories,
             'offres' => $offres,
-            // dd($offres),
             'isProfileComplete' => $isProfileComplete,
         ]);
     }
 
-    #[Route('/show', name: 'app_show')]
-    public function show(): Response
-    {
-        return $this->render('jobs/show.html.twig', [
-            'controller_name' => 'JobsController',
-        ]);
-    }
+    
 }

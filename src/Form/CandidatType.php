@@ -7,6 +7,7 @@ use DateTime;
 use App\Entity\Categorie;
 use App\Entity\ExperienceProfessionel;
 use App\Entity\Genre;
+use DateTimeImmutable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,7 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
@@ -73,7 +78,7 @@ class CandidatType extends AbstractType
             ])
 
 
-            ->add('date_naissance', DateTimeType::class, [
+            ->add('date_naissance', DateType::class, [
                 'label' => 'Date_naissance',
                 'required' => false,
                 'attr' => [
@@ -103,49 +108,53 @@ class CandidatType extends AbstractType
 
             ->add('genre', EntityType::class, [
                 'class' => Genre::class,
-                'required' => false,
                 'choice_label' => 'nom',
-                'expanded' => true,
                 'label' => 'Genre',
+                'required' => false,
                 'attr' => [
                     'id' => 'gender',
                     'class' => 'form-control',
-                    'data-placeholder' => 'Type in or Select your genre.'
                 ],
+                'placeholder' => 'Choose an option.'
             ])
 
 
             ->add('experience', EntityType::class, [
                 'class' => ExperienceProfessionel::class,
                 'choice_label' => 'nom',
-              
-                'expanded' => true,
                 'label' => 'Experience',
+                'required' => false,
                 'attr' => [
                     'id' => 'experience',
                     'class' => 'form-control',
-                    'data-placeholder' => 'Type in or Select your experience.'
                 ],
+                'placeholder' => 'Choose an option.'
             ])
 
-            ->add('categorie', EntityType::class, [
+             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
-                
                 'choice_label' => 'nom',
-                'expanded' => true,
                 'label' => 'Interest in job sector',
+                'required' => false,
                 'attr' => [
                     'id' => 'job_sector',
                     'class' => 'form-control',
-                    'data-placeholder' => 'Type in or Select job sector you would be interested in.'
                 ],
+                'placeholder' => 'Choose an option.'
             ])
-            
+
+           
+
+             ->add('user', UserType::class, [
+                'label' => false,
+            ])
 
             ->add('fichiers', FichiersType::class, [
                 'label' => false,
                 
             ]);
+
+         
            
 
 
@@ -154,7 +163,9 @@ class CandidatType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Candidat::class, // Assure-toi que ça pointe bien vers l'entité Candidat
+            'data_class' => Candidat::class, 
         ]);
     }
-}
+
+  
+    }   

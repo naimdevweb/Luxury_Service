@@ -46,7 +46,7 @@
         </section>
 
         <!-- Page Content-->
-       <section id="job-offers" class="section-padding gray-bg">
+      <section id="job-offers" class="section-padding gray-bg">
     <div class="container">
         <div class="text-center mb-40">
             <h2 class="section-title">We have the perfect job for you</h2>
@@ -60,16 +60,12 @@
                     <li class="waves-effect waves-light" data-group="{{ categorie.nom }}">{{ categorie.nom }}</li>
                 {% endfor %}
             </ul>
-{% for label, messages in app.flashes %}
-    <div class="alert alert-{{ label }}">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    </div>
-{% endfor %}    
+            
+           
+
             <div class="portfolio portfolio-with-title col-2 gutter mt-30">
                 {% for offre in offres %}
-                    <div class="portfolio-item" data-groups='["all", "{{ offre.categorie.nom }}"]'>
+                     <div class="portfolio-item" data-groups='["all", "{{ offre.categorie.nom }}"]'> 
                         <div class="portfolio-wrapper">
                             <div class="card job-card">
                                 <div class="card-content">
@@ -104,12 +100,27 @@
                             </div>
                         </div>
                     </div>
+                {% else %}
+                    <div class="no-item">
+                        <p>No job offers available at the moment.</p>
+                    </div>
                 {% endfor %}
-                <div class="no-item"></div>
             </div>
         </div>
     </div>
 </section>
+
+
+            <div class="no-item"></div>
+
+        </div>
+
+        <div class="text-center">
+            <a href="/jobs" class="btn gradient secondary waves-effect waves-light mt-30">View all job offers</a>
+        </div>
+    </div>
+</section>
+
 
     
 
@@ -152,9 +163,27 @@
 
 {% block javascripts %}
 <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        const filterButtons = document.querySelectorAll('.portfolio-filter li');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
 
-    onAppReady(function() {
-        $('.preload').remove();
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-group');
+
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                portfolioItems.forEach(item => {
+                    const groups = JSON.parse(item.getAttribute('data-groups'));
+                    if (groups.includes(filter) || filter === 'all') {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
     });
 </script>
 
