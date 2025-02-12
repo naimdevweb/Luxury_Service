@@ -31,6 +31,7 @@ class CandidatType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'last_name',
                     'class' => 'form-control'
@@ -39,6 +40,7 @@ class CandidatType extends AbstractType
             ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'last_name',
                     'class' => 'form-control'
@@ -47,6 +49,7 @@ class CandidatType extends AbstractType
             ->add('localisation', TextType::class, [
                 'label' => 'Localisation',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'current_location',
                     'class' => 'form-control'
@@ -55,6 +58,7 @@ class CandidatType extends AbstractType
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'address',
                     'class' => 'form-control'
@@ -63,6 +67,7 @@ class CandidatType extends AbstractType
             ->add('pays', TextType::class, [
                 'label' => 'Pays',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'country',
                     'class' => 'form-control'
@@ -71,6 +76,7 @@ class CandidatType extends AbstractType
             ->add('nationalite', TextType::class, [
                 'label' => 'Nationalite',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'nationality',
                     'class' => 'form-control'
@@ -81,6 +87,7 @@ class CandidatType extends AbstractType
             ->add('date_naissance', DateType::class, [
                 'label' => 'Date_naissance',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'birth_date',
                     'class' => 'form-control'
@@ -91,6 +98,7 @@ class CandidatType extends AbstractType
             ->add('lieu_naissance', TextType::class, [
                 'label' => 'Lieu_naissance',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'birth_place',
                     'class' => 'form-control'
@@ -100,6 +108,7 @@ class CandidatType extends AbstractType
             ->add('description', TextType::class, [
                 'label' => 'Description',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'description',
                     'class' => 'form-control'
@@ -111,6 +120,7 @@ class CandidatType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => 'Genre',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'gender',
                     'class' => 'form-control',
@@ -124,6 +134,7 @@ class CandidatType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => 'Experience',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'experience',
                     'class' => 'form-control',
@@ -136,6 +147,7 @@ class CandidatType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => 'Interest in job sector',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'job_sector',
                     'class' => 'form-control',

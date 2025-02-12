@@ -22,13 +22,11 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        $user = $this->getUser();
-        if ($user->getRoles()[0] == "ROLE_ADMIN" || "ROLE_RECRUTEUR") {
+       
             return $this->render('admin/dashboard.html.twig');
-        } else {
-            return $this->redirectToRoute('easyadmin');
-        }
+       
     }
+    
 
     public function configureDashboard(): Dashboard
     {

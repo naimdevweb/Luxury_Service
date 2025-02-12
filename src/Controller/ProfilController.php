@@ -13,9 +13,10 @@ use App\Repository\CandidatRepository;
 use App\Entity\Fichiers;
 use App\Services\CandidateCompletionCalculator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 final class ProfilController extends AbstractController
 {
@@ -26,8 +27,7 @@ final class ProfilController extends AbstractController
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher,
         MailerInterface $mailer,
-        CandidateCompletionCalculator $completionCalculator,
-       
+        CandidateCompletionCalculator $completionCalculator
     ): Response
     {
         /**
@@ -35,14 +35,11 @@ final class ProfilController extends AbstractController
          */
         $user = $this->getUser();
 
-      
         if ($user === null) {
             return $this->redirectToRoute('app_login');
         }
 
-       
-    
-        
+        if($user)
 
         $candidat = $candidatRepository->findOneBy(['user' => $user->getId()]);
         if ($candidat === null) {
@@ -57,9 +54,11 @@ final class ProfilController extends AbstractController
 
         $form = $this->createForm(CandidatType::class, $candidat);
         $form->handleRequest($request);
+        // dd($form);
 
         if ($form->isSubmitted() && $form->isValid()) {
-          
+            // dd($form);
+
             if ($candidat->getCreatedAt() === null) {
                 $candidat->setCreatedAt(new \DateTimeImmutable());
             }
@@ -81,7 +80,6 @@ final class ProfilController extends AbstractController
 
             $email = $form->get('user')->get('email')->getData();
             $newPassword = $form->get('user')->get('newPassword')->getData();
-            // dd($email, $newPassword);
             if ($email || $newPassword) {
                 if ($email && $newPassword) {
                     if ($user->getEmail() !== $email) {
@@ -106,7 +104,6 @@ final class ProfilController extends AbstractController
                     $this->addFlash('danger', 'Email and password must be filled together to change password.');
                 }
             }
-            
 
             $entityManager->persist($candidat);
             $entityManager->flush();
@@ -119,31 +116,40 @@ final class ProfilController extends AbstractController
         return $this->render('profil/profile.html.twig', [
             'form' => $form->createView(),
             'completionRate' => $completionRate,
-            
         ]);
     }
+   
+    #[Route('/profil/delete', name: 'app_profil_delete')]
+    public function delete(
+        CandidatRepository $candidatRepository,
+        EntityManagerInterface $entityManager,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session
+    ): Response
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
 
+        if ($user === null) {
+            return $this->redirectToRoute('app_login');
+        }
+        
+        
+        $candidat = $candidatRepository->findOneBy(['user' => $user->getId()]);
+        // dd($candidat);
+        if ($candidat !== null) {
+            $candidat->setDeletedAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
 
-    // #[Route('/profil/delete', name: 'app_profil_delete', methods: ['POST'])]
-    // public function deleteAccount(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $user = $this->getUser();
+      
 
-    //     if ($user) {
-    //         $entityManager->remove($user);
-    //         $entityManager->flush();
+        
 
-    //         $this->addFlash('success', 'Your account has been deleted successfully.');
-
-    //         // Déconnecter l'utilisateur après la suppression du compte
-    //         $this->container->get('security.token_storage')->setToken(null);
-    //         $request->getSession()->invalidate();
-    //     }
-
-    //     return $this->redirectToRoute('app_register');
-    // }
+        $entityManager->flush();
+return $this->redirect($this->generateUrl('app_logout'));
+        return $this->redirectToRoute('app_register');
+    }
 }
-
-
-
-

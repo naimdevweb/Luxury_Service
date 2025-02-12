@@ -64,8 +64,8 @@
            
 
             <div class="portfolio portfolio-with-title col-2 gutter mt-30">
-                {% for offre in offres %}
-                     <div class="portfolio-item" data-groups='["all", "{{ offre.categorie.nom }}"]'> 
+                {% for offre in pagination %}
+                     <div class="portfolio-item" data-groups=''> 
                         <div class="portfolio-wrapper">
                             <div class="card job-card">
                                 <div class="card-content">
@@ -78,10 +78,13 @@
                                             <i class="material-icons">&#xE53E;</i>{{ offre.salaire }}&euro;
                                         </div>
                                         <div class="meta">
-                                            <i class="material-icons">&#xE916;</i>{{ offre.createdAt|date('Y-m-d') }}
+                                            <i class="material-icons">&#xE916;</i>{{ offre.created_at|date('Y-m-d') }}
+                                        </div>
+                                         <div class="meta">
+                                           
                                         </div>
                                         <div class="meta">
-                                            <i class="material-icons">&#xE55F;</i>{{ offre.localisation }}
+                                           
                                         </div>
                                     </div>
                                     <p class="truncate-text">{{ offre.description }}</p>
@@ -109,6 +112,10 @@
         </div>
     </div>
 </section>
+
+ <div class="text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
 
 
             <div class="no-item"></div>

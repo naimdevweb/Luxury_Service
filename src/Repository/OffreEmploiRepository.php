@@ -16,6 +16,43 @@ class OffreEmploiRepository extends ServiceEntityRepository
         parent::__construct($registry, OffreEmploi::class);
     }
 
+    // public function findLatest(int $limit = 10): array
+    // {
+    //     return $this->createQueryBuilder('o')
+    //         ->orderBy('o.id', 'DESC')
+    //         ->setMaxResults($limit)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
+ /**
+     * @return OffreWithCountDTO[]
+     */
+    public function findAllWithDetails(int $limit = 10): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('NEW App\\DTO\\OffreWithCountDTO(o.id, o.titre, o.salaire, o.created_at, o.description, c.nom)')
+            ->leftJoin('o.categorie', 'c')
+            ->orderBy('o.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    /**
+     * @return OffreWithCountDTO[]
+     */
+
+    public function findAllJobs(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('NEW App\\DTO\\OffreWithCountDTO(o.id, o.titre, o.salaire, o.created_at, o.description, c.nom)')
+            ->leftJoin('o.categorie', 'c')
+            ->orderBy('o.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return OffreEmploi[] Returns an array of OffreEmploi objects
     //     */

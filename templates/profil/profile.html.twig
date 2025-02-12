@@ -22,7 +22,8 @@
 
 
 	<!-- Page Header-->
-		<section class="page-title page-title-bg fixed-bg overlay dark-5 padding-top-160 padding-bottom-80"> <div class="container">
+	<section class="page-title page-title-bg fixed-bg overlay dark-5 padding-top-160 padding-bottom-80"> 
+		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<h2 class="white-text">Your profile</h2>
@@ -43,19 +44,25 @@
 		<div class="container">
 			<div class="row">
 				<div class="score-container">
-					<h4>
-						<img src="https://i.imgur.com/s9bPVaK.gif" style="height: 80px; width: 201px;">
-						&nbsp;
-												                            &nbsp; Hooray ! Your profile is complete.
-					</h4>
-					<div class="c100 p100 small complete ">
-						<span>{{completionRate}}%</span>
-						<div class="slice">
-							<div class="bar"></div>
-							<div class="fill"></div>
-						</div>
-					</div>
-				</div>
+                    {% if completionRate == 100 %}
+                    <h4>
+                        <img src="{{ asset('img/profile.gif') }}" style="height: 80px; width: 201px;"> &nbsp;
+                        &nbsp; Hooray ! Your profile is complete.
+                    </h4>
+                    {% else %}
+                    <h4>
+                        &nbsp; Your profile is {{completionRate}}% complete, you can complete it by adding more information.
+                    </h4>
+                    {% endif %}
+                    <div class="c100 p{{completionRate}} small complete ">
+                        <span>{{completionRate}}%</span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>
+
+                </div>
 				<div class="clearfix"></div>
 			</div>
 		</div>
@@ -72,8 +79,6 @@
             }
         }) }}
 
-	{# <input name="_token" type="hidden" value="UYfchy67WuTVzhSstPK1RDZEIfgqpKCcLnLyhf8a"> #}
-
 
 	<section class="section-padding">
 		<div class="container">
@@ -84,15 +89,11 @@
 					class="col-xs-12 col-sm-6 col-md-4">
 
 					{# FORM GENRE #}
-{{ form_label(form.genre) }}
-{{ form_widget(form.genre) }}
-{{ form_errors(form.genre) }}
+					{{ form_label(form.genre) }}
+					{{ form_widget(form.genre) }}
+					{{ form_errors(form.genre) }}
 
-					<div class="input-field">
-						
-						
-						
-					</div>
+					<div class="input-field"></div>
 				</div>
 
 
@@ -156,30 +157,28 @@
 								<i class="material-icons">insert_photo</i>
 								Photo</span>
 							{# <input id="photo" size="20000000" accept=".pdf,.jpg,.doc,.docx,.png,.gif" name="photo" type="file"> #}
-								{{ form_widget(form.fichiers.photoFile, {'attr': {'onchange': 'previewImage(event)'}}) }}
-        {{ form_errors(form.fichiers.photoFile) }}
+							{{ form_widget(form.fichiers.photoFile, {'attr': {'onchange': 'previewImage(event)'}}) }}
+							{{ form_errors(form.fichiers.photoFile) }}
 
 						</div>
 
-						  <div class="existing-file">
-        {% set photoFile = form.fichiers.vars.value.getCheminPhoto() %}
-		
-       
-    </div>
+						<div class="existing-file">
+							{% set photoFile = form.fichiers.vars.value.getCheminPhoto() %}
 
-						
+
+						</div>
+
+
 						<div class="file-path-wrapper">
 							<input class="file-path validate" type="text" placeholder="Upload your ID photo" readonly>
 						</div>
-					<div class="image-preview">
-        <img id="imagePreview" src="{{ asset('uploads/photos/' ~ photoFile) }}" alt="Aperçu de l'image" style="max-width: 100%; height: auto;">
-    </div>
+						<div class="image-preview">
+							<img id="imagePreview" src="{{ asset('uploads/photos/' ~ photoFile) }}" alt="Aperçu de l'image" style="max-width: 100%; height: auto;">
+						</div>
 					</div>
 				</div>
 
 
-				
-				
 				<div class="col-xs-12 col-sm-6 col-md-8">
 					<div class="row">
 						<div
@@ -197,7 +196,7 @@
 							class="col-xs-12 col-sm-6">
 
 							{# FORM NATIONALITY #}
-							
+
 
 							<div class="input-field">
 								{{ form_widget(form.nationalite) }}
@@ -211,11 +210,11 @@
 							{# FORM BIRTHDATE #}
 
 							<div class="input-field">
-							{{ form_widget(form.date_naissance) }}
+								{{ form_widget(form.date_naissance) }}
 								{{ form_label(form.date_naissance) }}
 								{{ form_errors(form.date_naissance) }}
 								{# <input class="datepicker" id="birth_date" name="birth_date" type="text" value="">
-								<label for="birth_date">Birthdate</label> #}
+																								<label for="birth_date">Birthdate</label> #}
 							</div>
 						</div>
 						<div
@@ -242,91 +241,90 @@
 						{# FORM PASSPORT #}
 
 						<div class="file-field input-field">
-    <div class="btn btn-lg primary waves-effect waves-light">
-        <span>
-            <i class="material-icons">&#xE24D;</i>
-            Passport
-        </span>
-        {{ form_widget(form.fichiers.passeportFile, {'attr': {'onchange': 'previewPasseport(event)'}}) }}
-        {{ form_errors(form.fichiers.passeportFile) }}
-    </div>
-    <div class="existing-file" id="passeportLinkContainer">
-        {% set passeportFile = form.fichiers.vars.value.getCheminPasseport() %}
-        {% if passeportFile %}
-            <a href="{{ asset('uploads/passeports/' ~ passeportFile) }}" target="_blank" id="passeportLink">
-                <i class="material-icons">&#xE24D;</i>
-                {{ passeportFile }}
-            </a>
-        {% endif %}
-    </div>
-    <div class="file-path-wrapper">
-        <input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
-    </div>
-</div>
-{# FORM CV #}
+							<div class="btn btn-lg primary waves-effect waves-light">
+								<span>
+									<i class="material-icons">&#xE24D;</i>
+									Passport
+								</span>
+								{{ form_widget(form.fichiers.passeportFile, {'attr': {'onchange': 'previewPasseport(event)'}}) }}
+								{{ form_errors(form.fichiers.passeportFile) }}
+							</div>
+							<div class="existing-file" id="passeportLinkContainer">
+								{% set passeportFile = form.fichiers.vars.value.getCheminPasseport() %}
+								{% if passeportFile %}
+									<a href="{{ asset('uploads/passeports/' ~ passeportFile) }}" target="_blank" id="passeportLink">
+										<i class="material-icons">&#xE24D;</i>
+										{{ passeportFile }}
+									</a>
+								{% endif %}
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
+							</div>
+						</div>
+						{# FORM CV #}
 
-<div class="file-field input-field" style="margin-top: 32px;">
-    <div class="btn btn-lg primary waves-effect waves-light">
-        <span>
-            <i class="material-icons">insert_drive_file</i>
-            CV
-        </span>
-        {{ form_widget(form.fichiers.cvFile, {'attr': {'onchange': 'previewCv(event)'}}) }}
-        {{ form_errors(form.fichiers.cvFile) }}
-    </div>
-    <div class="existing-file" id="cvLinkContainer">
-        {% set cvFile = form.fichiers.vars.value.getCheminCv() %}
-        {% if cvFile %}
-            <a href="{{ asset('uploads/cvs/' ~ cvFile) }}" target="_blank" id="cvLink">
-                <i class="material-icons">&#xE24D;</i>
-                {{ cvFile }}
-            </a>
-        {% endif %}
-    </div>
-    <div class="file-path-wrapper">
-        <input class="file-path validate" type="text" placeholder="Upload your CV" readonly>
-    </div>
-</div
-
-
+						<div class="file-field input-field" style="margin-top: 32px;">
+							<div class="btn btn-lg primary waves-effect waves-light">
+								<span>
+									<i class="material-icons">insert_drive_file</i>
+									CV
+								</span>
+								{{ form_widget(form.fichiers.cvFile, {'attr': {'onchange': 'previewCv(event)'}}) }}
+								{{ form_errors(form.fichiers.cvFile) }}
+							</div>
+							<div class="existing-file" id="cvLinkContainer">
+								{% set cvFile = form.fichiers.vars.value.getCheminCv() %}
+								{% if cvFile %}
+									<a href="{{ asset('uploads/cvs/' ~ cvFile) }}" target="_blank" id="cvLink">
+										<i class="material-icons">&#xE24D;</i>
+										{{ cvFile }}
+									</a>
+								{% endif %}
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload your CV" readonly>
+							</div>
+						</div>
+					
 					</div>
-				</div>
-				
 
-				<div class="col-xs-12 col-sm-6">
-					<div
-						class="col-xs-12 col-sm-12">
 
-						{# FORM JOB SECTOR #}
-{{ form_label(form.categorie) }}
-						<div class="input-field" style="margin-top: 5px;">
-							{{ form_widget(form.categorie) }}
-								
+					<div class="col-xs-12 col-sm-6">
+						<div
+							class="col-xs-12 col-sm-12">
+
+							{# FORM JOB SECTOR #}
+							{{ form_label(form.categorie) }}
+							<div class="input-field" style="margin-top: 5px;">
+								{{ form_widget(form.categorie) }}
+
 								{{ form_errors(form.categorie) }}
+							</div>
+						</div>
+						<div
+							class="col-xs-12 col-sm-12">
+
+							{# FORM EXPERIENCE #}
+							{{ form_label(form.experience) }}
+							<div class="input-field">
+								{{ form_widget(form.experience) }}
+
+								{{ form_errors(form.experience) }}
+							</div>
 						</div>
 					</div>
 					<div
 						class="col-xs-12 col-sm-12">
 
-						{# FORM EXPERIENCE #}
-{{ form_label(form.experience) }}
+						{# FORM DESCRIPTION #}
+
 						<div class="input-field">
-							{{ form_widget(form.experience) }}
-								
-								{{ form_errors(form.experience) }}
+							{{ form_label(form.description) }}
+
+							{{ form_widget(form.description) }}
+							{{ form_errors(form.description) }}
 						</div>
-					</div>
-				</div>
-				<div
-					class="col-xs-12 col-sm-12">
-
-					{# FORM DESCRIPTION #}
-
-					<div class="input-field">
-								{{ form_label(form.description) }}
-
-						{{ form_widget(form.description) }}
-								{{ form_errors(form.description) }}
 					</div>
 				</div>
 			</div>
@@ -335,11 +333,7 @@
 
 	<section class="section-padding gray-bg">
 
-	
 
-		
-
-		
 		<div class="container">
 			<div class="row">
 				<h3 class="text-extrabold">Your K-Yachting account</h3>
@@ -348,9 +342,10 @@
 
 					{# FORM EMAIL #}
 
-					<div class="input-field">
+					<div
+						class="input-field">
 						{# <input id="email" name="email" type="email" value="">
-						<label for="email">Email</label> #}
+																			<label for="email">Email</label> #}
 
 						{{ form_label(form.user.email) }}
 						{{ form_widget(form.user.email) }}
@@ -362,9 +357,10 @@
 
 					{# FORM PASSWORD #}
 
-					<div class="input-field">
+					<div
+						class="input-field">
 						{# <input id="password" name="password" type="password" value="">
-						<label for="password">Change your password here</label> #}
+																			<label for="password">Change your password here</label> #}
 						{{ form_widget(form.user.newPassword.first) }}
 						{{ form_label(form.user.newPassword.first) }}
 						{{ form_errors(form.user.newPassword.first) }}
@@ -375,9 +371,10 @@
 
 					{# FORM CONFIRM PASSWORD #}
 
-					<div class="input-field">
+					<div
+						class="input-field">
 						{# <input id="password_repeat" name="password_repeat" type="password" value="">
-						<label for="password_repeat">Confirm your new password</label> #}
+																			<label for="password_repeat">Confirm your new password</label> #}
 
 						{{ form_widget(form.user.newPassword.second) }}
 						{{ form_label(form.user.newPassword.second) }}
@@ -386,106 +383,93 @@
 				</div>
 			</div>
 			<div class="row">
-                    <div class="col-xs-12 mt-40 mb-80 delete-account">
-                        {# <form action="{{ path('app_profil_delete') }}" method="post" onsubmit="return confirm('Please Type \'Delete my account\' to delete your K-Yachting Services account:') == 'Delete my account'"> #}
-                            <button type="submit" class="btn btn-block btn-lg waves-effect waves-light">
-                                <i class="material-icons">&#xE872;</i>Delete my account
-                            </button>
-                        </form>
-                    </div>
+				<div class="col-xs-12 mt-40 mb-80 delete-account">
+                    <a href="{{ path('app_profil_delete') }}" onclick="return prompt('Please Type 'Delete my account' to delete your K-Yachting Services account:') == 'Delete my account'" class="btn btn-block btn-lg waves-effect waves-light">
+                        <i class="material-icons">&#xE872;</i>Delete my account</a>
                 </div>
-					
-			</div>
-			<div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <a href="{{ path('app_home') }}" class="btn btn-block btn-lg border primary waves-effect waves-light">
-                            <i class="fa fa-long-arrow-left"></i> Back home
-                        </a>
-                    </div>
-
-				<div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-4">
-					<button type="submit" class="btn btn-block btn-lg gradient secondary waves-effect waves-light">
-						<span>
-							<strong>UPDATE</strong>
-							NOW</span>
-					</button>
-				</div>
 			</div>
 
 		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4">
+				<a href="{{ path('app_home') }}" class="btn btn-block btn-lg border primary waves-effect waves-light">
+					<i class="fa fa-long-arrow-left"></i>
+					Back home
+				</a>
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-4">
+				<button type="submit" class="btn btn-block btn-lg gradient secondary waves-effect waves-light">
+					<span>
+						<strong>UPDATE</strong>
+						NOW</span>
+				</button>
+			</div>
+		</div>
+
+
 	</section>
-	{{ form_end(form) }}
+{{ form_end(form) }}
 {% endblock %}
 
+
 {% block javascriptFooter %}
-
 <script>
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var output = document.getElementById('imagePreview');
-            output.src = reader.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
-    }
-</script>
-
-<script>
-function previewCv(event) {
-    var cvFileName = event.target.files[0].name; // Récupérer le nom du fichier sélectionné
-    var cvLinkContainer = document.getElementById('cvLinkContainer'); // Conteneur du lien du CV
-    var cvLink = document.getElementById('cvLink'); // Lien actuel
-
-    // Si un lien existe déjà, on le met à jour
-    if (cvLink) {
-        cvLink.href = URL.createObjectURL(event.target.files[0]); // Utilisation de l'URL temporaire pour le fichier
-        cvLink.textContent = cvFileName; // Mettre à jour le texte du lien avec le nom du fichier
-    } else {
-        // Si le lien n'existe pas encore, en créer un nouveau
-        var newCvLink = document.createElement('a');
-        newCvLink.href = URL.createObjectURL(event.target.files[0]);
-        newCvLink.target = '_blank';
-        newCvLink.id = 'cvLink';
-        newCvLink.innerHTML = `<i class="material-icons">&#xE24D;</i> ${cvFileName}`;
-
-        // Ajouter le lien à l'élément de conteneur
-        cvLinkContainer.appendChild(newCvLink);
-    }
+function previewImage(event) {
+var reader = new FileReader();
+reader.onload = function () {
+var output = document.getElementById('imagePreview');
+output.src = reader.result;
 }
+reader.readAsDataURL(event.target.files[0]);
+}</script><script>
+function previewCv(event) {
+var cvFileName = event.target.files[0].name; // Récupérer le nom du fichier sélectionné
+var cvLinkContainer = document.getElementById('cvLinkContainer'); // Conteneur du lien du CV
+var cvLink = document.getElementById('cvLink');
+// Lien actuel
 
+// Si un lien existe déjà, on le met à jour
+if (cvLink) {
+cvLink.href = URL.createObjectURL(event.target.files[0]); // Utilisation de l'URL temporaire pour le fichier
+cvLink.textContent = cvFileName; // Mettre à jour le texte du lien avec le nom du fichier
+} else { // Si le lien n'existe pas encore, en créer un nouveau
+var newCvLink = document.createElement('a');
+newCvLink.href = URL.createObjectURL(event.target.files[0]);
+newCvLink.target = '_blank';
+newCvLink.id = 'cvLink';
+newCvLink.innerHTML = `<i class="material-icons">&#xE24D;</i> ${cvFileName}`;
+
+// Ajouter le lien à l'élément de conteneur
+cvLinkContainer.appendChild(newCvLink);
+}
+}
 
 
 function previewPasseport(event) {
-    var passeportFileName = event.target.files[0].name; // Récupérer le nom du fichier sélectionné
-    var passeportLinkContainer = document.getElementById('passeportLinkContainer'); // Conteneur du lien du passeport
-    var passeportLink = document.getElementById('passeportLink'); // Lien actuel
+var passeportFileName = event.target.files[0].name; // Récupérer le nom du fichier sélectionné
+var passeportLinkContainer = document.getElementById('passeportLinkContainer'); // Conteneur du lien du passeport
+var passeportLink = document.getElementById('passeportLink');
+// Lien actuel
 
-    // Si un lien existe déjà, on le met à jour
-    if (passeportLink) {
-        passeportLink.href = URL.createObjectURL(event.target.files[0]); // Utilisation de l'URL temporaire pour le fichier
-        passeportLink.textContent = passeportFileName; // Mettre à jour le texte du lien avec le nom du fichier
-    } else {
-        // Si le lien n'existe pas encore, en créer un nouveau
-        var newPasseportLink = document.createElement('a');
-        newPasseportLink.href = URL.createObjectURL(event.target.files[0]);
-        newPasseportLink.target = '_blank';
-        newPasseportLink.id = 'passeportLink';
-        newPasseportLink.innerHTML = `<i class="material-icons">&#xE24D;</i> ${passeportFileName}`;
+// Si un lien existe déjà, on le met à jour
+if (passeportLink) {
+passeportLink.href = URL.createObjectURL(event.target.files[0]); // Utilisation de l'URL temporaire pour le fichier
+passeportLink.textContent = passeportFileName; // Mettre à jour le texte du lien avec le nom du fichier
+} else { // Si le lien n'existe pas encore, en créer un nouveau
+var newPasseportLink = document.createElement('a');
+newPasseportLink.href = URL.createObjectURL(event.target.files[0]);
+newPasseportLink.target = '_blank';
+newPasseportLink.id = 'passeportLink';
+newPasseportLink.innerHTML = `<i class="material-icons">&#xE24D;</i> ${passeportFileName}`;
 
-        // Ajouter le lien à l'élément de conteneur
-        passeportLinkContainer.appendChild(newPasseportLink);
-    }
+// Ajouter le lien à l'élément de conteneur
+passeportLinkContainer.appendChild(newPasseportLink);
 }
+}</script><script type="text/javascript">
 
-</script>
 
-	<script type="text/javascript">
-
-	
-
-		onAppReady(function () {
+onAppReady(function () {
 $('.preload').remove();
-});
-	</script>
-
-{% endblock %}
+});</script>{% endblock %}

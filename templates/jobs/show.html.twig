@@ -66,7 +66,7 @@
 
     {# Vérifier si l'utilisateur a déjà postulé pour cette offre #}
     {% for candidature in app.user.candidat.candidature %}
-        {% if candidature.offre.id == offre_emploi.id %}
+        {% if candidature.offreEmploi.id == offre_emploi.id %}
             {% set has_applied = true %}
         {% endif %}
     {% endfor %}

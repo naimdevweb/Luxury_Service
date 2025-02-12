@@ -20,8 +20,11 @@ class ContactDTO
     #[Assert\Length(min: 2, max: 200)]
     public string $message = '';
 
-
+#[Assert\NotBlank()]
+#[Assert\Length(min: 2, max: 50)]
     public string $prenom = '';
+#[Assert\NotBlank()]
+#[Assert\Length(min: 2, max: 50)]
     public string $nom = '';
     
 }
