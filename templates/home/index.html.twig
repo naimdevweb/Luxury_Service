@@ -221,7 +221,7 @@
                             <h3 class="white-text text-bold text-uppercase no-margin">WE HAVE THE SOLUTION FOR YOU</h3>
                         </div>
                         <div class="promo-btn">
-                            <a href="/templates/contact.html" class="btn border secondary waves-effect waves-light">Contact Us</a>
+                            <a href={{ path('contact') }} class="btn border secondary waves-effect waves-light">Contact Us</a>
                         </div>
                     </div>
                 </div>
@@ -267,7 +267,7 @@
                     </div>
 
                     <div class="text-center">
-                        <a href="/templates/company.html" class="btn gradient secondary waves-effect waves-light mt-40">More about us</a>
+                        <a href="{{ path('company') }}" class="btn gradient secondary waves-effect waves-light mt-40">More about us</a>
                     </div>
                 </div>
             </div>
@@ -292,7 +292,7 @@
                             <h3 class="c-secondary mb-30 no-margin">Sign-up and apply for jobs now</h3>
                             <p class="white-text section-sub">Each one of your skills is seen as precious resource to us, each one of your personality traits are considered as an added on value. Joining us is allowing our recruitment expertise and personal guidance to bring the best out in you by choosing the most suited position.</p>
 
-                            <a href="/templates/auth/register.html" class="btn border secondary waves-effect waves-light mt-40">Join us</a>
+                            <a href="{{ path('app_register') }}" class="btn border secondary waves-effect waves-light mt-40">Join us</a>
                         </div>
                     </div>
                 </div>
@@ -313,20 +313,21 @@
             <ul class="portfolio-filter brand-filter text-center">
                 <li class="active waves-effect waves-light" data-group="all">All</li>
                 {% for categorie in categories %}
-                    <li class="waves-effect waves-light" data-group="{{ categorie.nom }}">{{ categorie.nom }}</li>
+                    <li class="waves-effect waves-light" data-group="{{ categorie.slug}}">{{ categorie.slug }}</li>
                 {% endfor %}
             </ul>
             
            
             <div class="portfolio portfolio-with-title col-2 gutter mt-30">
                 {% for offre in offres %}
-                     <div class="portfolio-item" data-groups=''> 
+                     <div class="portfolio-item" data-groups='["all" ,"{{ offre.slug }}"]'> 
                         <div class="portfolio-wrapper">
                             <div class="card job-card">
                                 <div class="card-content">
                                     <span class="title">
                                         <span class="card-title">{{ offre.titre }}</span>
-                                        <span class="ref grey-text">Ref. {{ offre.id }}</span>
+                                        
+                                        <span class="ref grey-text">Ref. {{ offre.reference }}</span>
                                     </span>
                                     <div class="metas mb-20">
                                         <div class="meta">

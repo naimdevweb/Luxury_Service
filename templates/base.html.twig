@@ -188,11 +188,19 @@
 										<li>
 											<a href="{{ path('app_logout') }}">Logout</a>
 										</li>
-										<li class="dropdown">
-											<a target="_self" href="" class="btn btn-lg gradient secondary btn-block waves-effect waves-light btn-register">
-												<span>{{ app.user.candidat.prenom}}</span>
-											</a>
-										</li>
+										{% if app.user.candidat %}
+        <li class="dropdown">
+            <a target="_self" href="" class="btn btn-lg gradient secondary btn-block waves-effect waves-light btn-register">
+                <span>{{ app.user.candidat.prenom }}</span>
+            </a>
+        </li>
+    {% elseif app.user %}
+        <li class="dropdown">
+            <a target="_self" href="" class="btn btn-lg gradient secondary btn-block waves-effect waves-light btn-register">
+                <span>Bienvenue</span>
+            </a>
+        </li>
+    {% endif %}
 									{% endif %}
 								</ul>
 							</div>
@@ -200,10 +208,11 @@
 					</div>
 				</div>
 			</header>
-		{% endblock %}*
+		{% endblock %}
 
 
 {% include "partials/flash.html.twig" %}
+ 
 
 		{# {% for message in app.flashes('success') %}
             <div class="alert alert-success">

@@ -32,6 +32,12 @@ class Candidature
     #[ORM\JoinColumn(nullable: false)]
     private ?OffreEmploi $offreEmploi = null;
 
+public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
+    }
+
     public function __toString(): string
     {
         return $this->statut;

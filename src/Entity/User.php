@@ -154,13 +154,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->client;
     }
 
-    public function setClient(Client $client): static
+    public function setClient(Client $client): self
     {
-        // set the owning side of the relation if necessary
-        if ($client->getUser() !== $this) {
-            $client->setUser($this);
-        }
-
+        // set the owning side of the relation if necessar
         $this->client = $client;
 
         return $this;

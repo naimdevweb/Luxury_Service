@@ -118,13 +118,13 @@ final class ProfilController extends AbstractController
             'completionRate' => $completionRate,
         ]);
     }
+
+
    
     #[Route('/profil/delete', name: 'app_profil_delete')]
     public function delete(
         CandidatRepository $candidatRepository,
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage,
-        SessionInterface $session
     ): Response
     {
         /**
@@ -141,12 +141,10 @@ final class ProfilController extends AbstractController
         // dd($candidat);
         if ($candidat !== null) {
             $candidat->setDeletedAt(new \DateTimeImmutable());
+            $user->setRoles(['ROLE_DELETED']);
+            
             $entityManager->flush();
         }
-
-      
-
-        
 
         $entityManager->flush();
 return $this->redirect($this->generateUrl('app_logout'));

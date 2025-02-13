@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller\Admin;
 
 use App\Entity\User;
@@ -9,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use phpDocumentor\Reflection\Types\Boolean;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -31,15 +30,27 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email'),
             BooleanField::new('isVerified'),
             TextField::new('password')
-           
                 ->setFormType(PasswordType::class)
                 ->onlyOnForms(),
+            ChoiceField::new('roles')
+                ->setChoices([
+                    'Admin' => 'ROLE_ADMIN',
+                    'User' => 'ROLE_USER',
+                    'Recruteur' => 'ROLE_RECRUTEUR',
+                ])
+                ->allowMultipleChoices()
+                ->renderAsBadges(),
         ];
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if (!$entityInstance instanceof User) return;
+
+        // Définir la valeur null pour la propriété client si l'utilisateur est un recruteur
+        // if (in_array('ROLE_RECRUTEUR', $entityInstance->getRoles())) {
+        //     $entityInstance->setClient(null);
+        // }
 
         $entityInstance->setPassword(
             $this->passwordHasher->hashPassword(

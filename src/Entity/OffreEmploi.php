@@ -56,12 +56,18 @@ class OffreEmploi
     #[ORM\ManyToOne(inversedBy: 'offremploi')]
     private ?TypeContrat $typeContrat = null;
 
+    #[ORM\Column(type: Types::BIGINT)]
+    private ?string $reference = null;
+
   
 
 
     public function __construct()
     {
         $this->candidatures = new ArrayCollection();
+        
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function __toString(): string
@@ -232,6 +238,18 @@ class OffreEmploi
     public function setTypeContrat(?TypeContrat $typeContrat): static
     {
         $this->typeContrat = $typeContrat;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): static
+    {
+        $this->reference = $reference;
 
         return $this;
     }

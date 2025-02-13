@@ -19,7 +19,7 @@ final class CandidatureController extends AbstractController
     {
         $categories = $categorieRepository->findAll();
         $user = $this->getUser();
-        $offres = $entityManager->getRepository(OffreEmploi::class)->findAll();
+        $offres = $entityManager->getRepository(OffreEmploi::class)->findAllWithDetails();
         $candidat = $user->getCandidat();
 
         if (!$candidat || !$candidat->isProfileComplete()) {
@@ -35,7 +35,7 @@ final class CandidatureController extends AbstractController
             'candidat' => $candidat,
             'offreEmploi' => $offre,
         ]);
-
+        // dd($offres);
         if ($existingCandidature) {
             $this->addFlash('error', 'Vous avez déjà postulé à cette offre.');
             return $this->render('home/index.html.twig', [
@@ -59,6 +59,7 @@ final class CandidatureController extends AbstractController
         } else {
             $this->addFlash('error', 'Erreur lors de la soumission de votre candidature.');
         }
+        
 
         return $this->render('home/index.html.twig', [
             'categories' => $categories,

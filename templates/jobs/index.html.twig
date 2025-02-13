@@ -57,7 +57,7 @@
             <ul class="portfolio-filter brand-filter text-center">
                 <li class="active waves-effect waves-light" data-group="all">All</li>
                 {% for categorie in categories %}
-                    <li class="waves-effect waves-light" data-group="{{ categorie.nom }}">{{ categorie.nom }}</li>
+                    <li class="waves-effect waves-light"data-group="{{ categorie.slug}}">{{ categorie.slug }}</li>
                 {% endfor %}
             </ul>
             
@@ -65,13 +65,13 @@
 
             <div class="portfolio portfolio-with-title col-2 gutter mt-30">
                 {% for offre in pagination %}
-                     <div class="portfolio-item" data-groups=''> 
+                     <div class="portfolio-item" data-groups='["all" ,"{{ offre.slug }}"]'> 
                         <div class="portfolio-wrapper">
                             <div class="card job-card">
                                 <div class="card-content">
                                     <span class="title">
                                         <span class="card-title">{{ offre.titre }}</span>
-                                        <span class="ref grey-text">Ref. {{ offre.id }}</span>
+                                        <span class="ref grey-text">Ref. {{ offre.reference }}</span>
                                     </span>
                                     <div class="metas mb-20">
                                         <div class="meta">

@@ -20,19 +20,14 @@ class HomeController extends AbstractController
         //  dd($offres, $categories);
 
 
-        if($this->getUser() && $this->getUser()->getRoles()){
-            $roles = $this->getUser()->getRoles();
-            if (in_array('ROLE_RECRUTEUR', $roles)){
-                return $this->redirectToRoute('admin');
-            }
-        }
+        // if($this->getUser() && $this->getUser()->getRoles()){
+        //     $roles = $this->getUser()->getRoles();
+        //     if (in_array('ROLE_RECRUTEUR', $roles) || in_array('ROLE_ADMIN', $roles)){
+        //         return $this->redirectToRoute('admin');
+                
+        //     }
+        // }
 
-        if($this->getUser() && $this->getUser()->getRoles()){
-            $roles = $this->getUser()->getRoles();
-            if (in_array('ROLE_ADMIN', $roles)){
-                return $this->redirectToRoute('admin');
-            }
-        }
 
         return $this->render('home/index.html.twig', [
             'categories' => $categories,

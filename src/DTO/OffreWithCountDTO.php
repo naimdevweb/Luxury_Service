@@ -9,7 +9,11 @@ class OffreWithCountDTO
         public readonly float $salaire,
         public readonly \DateTimeInterface $created_at,
         public readonly string $description,
-        public readonly string $categorieNom
+        public readonly int $reference,
+        public readonly string $categorieNom,
+        public readonly string $slug
+
+        
     ) {
     }
 }

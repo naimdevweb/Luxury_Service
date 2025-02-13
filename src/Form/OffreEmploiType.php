@@ -20,6 +20,7 @@ class OffreEmploiType extends AbstractType
             ->add('description')
             ->add('salaire')
             ->add('note')
+            ->add('reference')
             ->add('active')
             ->add('created_at', null, [
                 'widget' => 'single_text',

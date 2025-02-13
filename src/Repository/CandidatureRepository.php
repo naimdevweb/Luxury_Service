@@ -16,6 +16,8 @@ class CandidatureRepository extends ServiceEntityRepository
         parent::__construct($registry, Candidature::class);
     }
 
+    
+
 //    /**
 //     * @return Candidature[] Returns an array of Candidature objects
 //     */

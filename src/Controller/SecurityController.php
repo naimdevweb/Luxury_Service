@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class SecurityController extends AbstractController
 {
@@ -30,4 +31,25 @@ class SecurityController extends AbstractController
         // controller can be blank: it will never be executed!
         // Symfony will intercept this route and handle the logout automatically
     }
+
+    #[Route(path: '/logout-message', name: 'app_logout_message')]
+    public function logoutMessage(): void
+    {
+        /** @var Session */
+        $session = $this->container->get('request_stack')->getSession();
+        // dd($session->get('deletedAccount'));
+        if($session->get('deletedAccount')){
+           
+        }
+        // verifier si on vient d'une suppression de compte
+        // $this->addFlash()
+        // $this->redirectToRoute('app_home');
+
+
+        //on est dans profile
+        //cette ligne envoie les datas
+        //cette ligne deco
+    }
+
+    
 }
