@@ -1,16 +1,14 @@
 <?php
-
 namespace App\Controller\Admin;
 
 use App\Entity\Candidature;
+use App\Repository\CandidatRepository;
 use App\Repository\CandidatureRepository;
+use App\Repository\OffreEmploiRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -50,32 +48,61 @@ class CandidatureCrudController extends AbstractCrudController
     {
         $response = $this->entityRepository->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
         $response->innerJoin('entity.offreEmploi', 'o')
+                 ->innerJoin('entity.candidat', 'candidat')
                  ->andWhere('o.client = :client')
                  ->setParameter('client', $this->security->getUser()->getClient());
 
         return $response;
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions;
-    }
-
     public function configureFields(string $pageName): iterable
     {
+        $user = $this->security->getUser();
+        $client = $user->getClient();
+
         return [
-            IdField::new('id')->hideOnForm(),
+            AssociationField::new('candidat')
+                ->setFormTypeOption('query_builder', function (CandidatRepository $candidatRepository) use ($client) {
+                    return $candidatRepository->createQueryBuilder('c')
+                        ->innerJoin('c.candidature', 'ca')
+                        ->innerJoin('ca.offreEmploi', 'o')
+                        ->andWhere('o.client = :client')
+                        ->setParameter('client', $client);
+                })
+                ->setFormTypeOption('disabled', true), // Rendre le champ en lecture seule
+            AssociationField::new('offreEmploi')
+                ->setFormTypeOption('query_builder', function (OffreEmploiRepository $offreEmploiRepository) use ($client) {
+                    return $offreEmploiRepository->createQueryBuilder('o')
+                        ->andWhere('o.client = :client')
+                        ->setParameter('client', $client);
+                })
+                ->setFormTypeOption('disabled', true), // Rendre le champ en lecture seule
+            ImageField::new('candidat.fichiers.chemin_cv', 'CV')
+                ->setBasePath('uploads/cvs')
+                ->setUploadDir('public/uploads/cvs')
+                ->setTextAlign('center')
+                ->setFormTypeOption('allow_delete', false)
+                ->setFormTypeOption('disabled', true), // Rendre le champ en lecture seule
+
+            ImageField::new('candidat.fichiers.chemin_passeport', 'PASSEPORT')
+                ->setBasePath('uploads/passeports')
+                ->setUploadDir('public/uploads/passeports')
+                ->setTextAlign('center')
+                ->setFormTypeOption('allow_delete', false) // Rendre le champ en lecture seule
+                ->setFormTypeOption('disabled', true), // Rendre le champ en lecture seule
+                
             ChoiceField::new('statut')
                 ->setChoices([
                     'En attente' => 'En attente',
                     'Acceptée' => 'Acceptée',
                     'Rejetée' => 'Rejetée',
                 ]),
-            DateTimeField::new('created_at'),
-            DateTimeField::new('updated_at'),
-            DateTimeField::new('deleted_at'),
-            AssociationField::new('candidat'),
-            AssociationField::new('offreEmploi'),
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable(Action::NEW); // Désactiver l'action NEW pour empêcher l'ajout de nouvelles candidatures
     }
 }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Candidature;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,7 +18,6 @@ class CandidatureRepository extends ServiceEntityRepository
     }
 
     
-
 //    /**
 //     * @return Candidature[] Returns an array of Candidature objects
 //     */

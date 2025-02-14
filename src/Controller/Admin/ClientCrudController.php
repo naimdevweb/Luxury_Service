@@ -67,7 +67,13 @@ class ClientCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+         /** 
+         * @var User $user
+         */
+        $user = $this->getUser();
+        
         $user = $this->security->getUser();
+        
         $existingClient = $this->clientRepository->findOneBy(['user' => $user]);
 
         if ($existingClient) {

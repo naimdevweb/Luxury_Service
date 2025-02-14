@@ -37,6 +37,20 @@ class Fichiers
     #[ORM\OneToOne(mappedBy: 'fichiers', cascade: ['persist', 'remove'])]
     private ?Candidat $candidat = null;
 
+    public function __serialize(): array
+    {
+        return [];
+    }
+
+    // public function __unserialize(array $data): void
+    // {
+    // }
+    
+
+    
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -115,4 +129,6 @@ class Fichiers
         $this->candidat = $candidat;
         return $this;
     }
+
+   
 }

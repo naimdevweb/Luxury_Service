@@ -17,6 +17,7 @@ class FichiersType extends AbstractType
                 'label' => 'Photo',
                 'required' => false,
                 'allow_delete' => true,
+                // 'serialize' => false,
                 'download_uri' => true,
                 'attr' => [
                     'class' => 'form-control',

@@ -15,6 +15,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Controller\Admin\AdminCrudController; // Importez votre contrôleur CRUD personnalisé
+
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
@@ -50,7 +52,9 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Candidat', 'fas fa-user-tie', Candidat::class);
             yield MenuItem::linkToCrud('Candidature', 'fas fa-user-tie', Candidature::class);
             yield MenuItem::section('Recruters');
-            yield MenuItem::linkToCrud('Client', 'fas fa-user-tie', Client::class);
+            yield MenuItem::linkToCrud('Client', 'fas fa-user-tie', Client::class)
+            ->setController(AdminCrudController::class);
+            
             yield MenuItem::section('Job Offers');
             yield MenuItem::linkToCrud('TypeContrat', 'fas fa-user-tie', TypeContrat::class);
             yield MenuItem::linkToCrud('OffreEmploi', 'fas fa-user-tie', OffreEmploi::class);

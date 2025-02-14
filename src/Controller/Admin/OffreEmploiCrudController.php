@@ -46,14 +46,11 @@ class OffreEmploiCrudController extends AbstractCrudController
 
     public function createEntity(string $entityFqcn)
     {
-        $user = $this->security->getUser();
-        $existingOffre = $this->offreEmploiRepository->findOneBy(['client' => $user->getClient()]);
-
-        if ($existingOffre) {
-            $this->addFlash('danger', 'Vous avez déjà créé une offre d\'emploi.');
-            return null;  // Ou rediriger vers une autre page
-        }
-
+        /** 
+         * @var User $user
+         */
+        $user = $this->getUser();
+ 
         $offreEmploi = new OffreEmploi();
         $offreEmploi->setClient($user->getClient());
         return $offreEmploi;
@@ -73,19 +70,7 @@ class OffreEmploiCrudController extends AbstractCrudController
         return $response;
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        $user = $this->security->getUser();
-        $existingOffre = $this->offreEmploiRepository->findOneBy(['client' => $user->getClient()]);
-
-        if ($existingOffre) {
-            return $actions
-                ->disable(Action::NEW);
-        }
-
-        return $actions;
-    }
-
+    
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -103,6 +88,7 @@ class OffreEmploiCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
+        
         if ($entityInstance instanceof OffreEmploi) {
             $user = $this->security->getUser();
             $entityInstance->setClient($user->getClient());
