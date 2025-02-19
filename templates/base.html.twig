@@ -92,8 +92,14 @@
 			<script src="https://assets-luxury.projets.garage404.com/js/revolution-ext-migration.js"></script>
 			<script src="https://assets-luxury.projets.garage404.com/js/revolution-ext-parallax.js"></script>
 
+			
 		{% endblock %}
 
+		{% block javascriptAssetComponent %}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+		{% endblock %}
 
 	</head>
 	<body id="top">
