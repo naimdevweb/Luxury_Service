@@ -4,7 +4,7 @@ body .brand {
     background: url('../img/luxury-services-logo.png') no-repeat center center;
 }
 body .cta-candidate {
-    background-image: url('../img/bg2.jpg')
+    background-image: url(../img/bg2.jpg);
 }
 body hr{
     border-top: 1px solid rgba(255, 255, 255, 0.25);
@@ -33,7 +33,7 @@ body .tt-words-wrapper b{
     text-transform: capitalize;
 }
 body .page-title-bg {
-    background-image: url(../../assets/img/bg3.jpg);
+    background-image: url(../img/bg3.jpg);
 }
 body .log-section form .checkbox label {
     font-size: 16px
@@ -117,7 +117,7 @@ body .log-section form .links a {
     background-color: #b6a575
 }
 .promo-parallax {
-    background-image: url('../bg2.jpg');
+    background-image: url('../img/bg2.jpg');
     background-color: rgba(0,0,0,0.5);
     background-blend-mode: overlay
 }
