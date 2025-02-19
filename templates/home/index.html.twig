@@ -12,7 +12,7 @@
 
 {% block linkicon %}
     <link rel="shortcut icon" href="./assets/img/ico/fav.png">
-    {# {{ asset('img/ico/fav.png') }} #}
+    
 {% endblock linkicon %}
 
 
@@ -395,12 +395,19 @@
 
 
 <script type="text/javascript">
-    let bg1URL = "{{ asset('img/bg1.jpg') }}";
-let bg2URL = "{{ asset('img/bg2.jpg') }}";
-let bg3URL = "{{ asset('img/bg3.jpg') }}";
-document.querySelector(".rev_slider_wrapper").setAttribute("style", "background:url('" + (
-isMobile ? bg1URL : bg3URL
-) + "');" + "background-size:cover;" + "background-position: center center;" + "height:" + window.innerHeight + "px");
+    var bg1 = "{{ asset('img/bg1.jpg') }}";
+    var bg3 = "{{ asset('img/bg3.jpg') }}";
+    document.querySelector(".rev_slider_wrapper").setAttribute("style",
+        "background:url('"+(
+            isMobile ?
+                bg1:
+                bg3
+                
+        ) + "');" +
+        "background-size:cover;"+
+        "background-position: center center;"+
+        "height:"+window.innerHeight+"px"
+    );
 
     onAppReady(function() {
         $('.preload').remove();

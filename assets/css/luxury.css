@@ -33,7 +33,7 @@ body .tt-words-wrapper b{
     text-transform: capitalize;
 }
 body .page-title-bg {
-    background-image: url(../img/bg3.jpg);
+    background-image: url(../../img/bg3.jpg);
 }
 body .log-section form .checkbox label {
     font-size: 16px
